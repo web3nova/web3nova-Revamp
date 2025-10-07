@@ -153,13 +153,7 @@ export default function Web3NovaHomepage() {
         Web3Nova is your launchpad into the world of Web3. Whether you're looking to start a career in blockchain development through our 16-week hands-on bootcamp, or seeking expert-led design and development services for your Web3 project.
         </p>
 
-        {/* Pagination dots */}
-        <div className="flex gap-2 md:gap-2.5 mb-10 md:mb-12">
-          <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-[#2E7BD1] shadow-lg shadow-[#2E7BD1]/50 animate-pulse"></div>
-          <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-white/20 hover:bg-white/40 transition-all cursor-pointer"></div>
-          <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-white/20 hover:bg-white/40 transition-all cursor-pointer"></div>
-          <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-white/20 hover:bg-white/40 transition-all cursor-pointer"></div>
-        </div>
+      
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-3 md:gap-4 w-full sm:w-auto px-4 sm:px-0">

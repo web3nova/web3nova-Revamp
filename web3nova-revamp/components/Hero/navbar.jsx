@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -67,22 +68,19 @@ export default function Navigation() {
             {/* Logo */}
             <div className="flex items-center gap-2">
               <div 
-                className={`bg-gradient-to-br from-[#2E7BD1] to-[#92B4E4] rounded-lg flex items-center justify-center shadow-lg shadow-[#2E7BD1]/40 transition-all duration-500 ${
-                  isScrolled ? 'w-8 h-8' : 'w-10 h-10'
+                className={`relative flex items-center justify-center transition-all duration-500 ${
+                  isScrolled ? 'w-16 h-16' : 'w-24 h-24'
                 }`}
               >
-                <span className={`text-white font-bold transition-all duration-500 ${
-                  isScrolled ? 'text-lg' : 'text-xl'
-                }`}>W3</span>
+                <Image 
+                  src="/web3Nova.svg" 
+                  alt="Logo" 
+                  fill
+                  className="object-contain"
+                  priority
+                />
               </div>
-              <span
-                className={`font-bold tracking-tight transition-all duration-500 ${
-                  isScrolled ? 'text-xl' : 'text-2xl'
-                }`}
-                style={{ fontFamily: 'Space Grotesk, sans-serif' }}
-              >
-                WEB3NOVA
-              </span>
+             
             </div>
 
             {/* Desktop Navigation */}
@@ -137,15 +135,15 @@ export default function Navigation() {
           <div className="px-4 py-3 flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-[#2E7BD1] to-[#92B4E4] rounded-lg flex items-center justify-center shadow-lg shadow-[#2E7BD1]/40">
-                <span className="text-white font-bold text-lg">W3</span>
+              <div className="relative w-14 h-14 flex items-center justify-center">
+                <Image 
+                  src="/web3Nova.svg" 
+                  alt="Logo" 
+                  fill
+                  className="object-contain"
+                  priority
+                />
               </div>
-              <span
-                className="text-lg font-bold tracking-tight"
-                style={{ fontFamily: 'Space Grotesk, sans-serif' }}
-              >
-                WEB3NOVA
-              </span>
             </div>
 
             {/* Right side: CTA + Menu */}
