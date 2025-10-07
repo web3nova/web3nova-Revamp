@@ -1,12 +1,11 @@
-// pages/about.js
-import About from '../components/About';
+import ThemeToggle from "@/components/ThemeToggle";
+import About from "@/components/About";
 
-const AboutPage = () => {
+export default function AboutPage() {
   return (
-    <div className="bg-[#1A1A1D] min-h-screen">
+    <div className="relative">
+      <ThemeToggle />
       <About />
     </div>
   );
-};
-
-export default AboutPage;
+}

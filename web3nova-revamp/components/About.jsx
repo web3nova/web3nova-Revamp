@@ -5,7 +5,6 @@ import {
   Sparkles,
   ChevronLeft,
   ChevronRight,
-  Rocket,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -77,41 +76,49 @@ const AboutPage = () => {
 
   return (
     <div
-      className="min-h-screen bg-black text-white overflow-hidden"
+      className="relative min-h-screen text-gray-900 dark:text-white overflow-hidden transition-colors duration-700"
       style={{ fontFamily: "'Inter', sans-serif" }}
     >
-      {/* Navbar */}
-      <motion.nav
-        className="fixed top-0 w-full bg-black/80 backdrop-blur-md z-50 border-b border-gray-800"
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.7 }}
-      >
-        <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-gradient-to-br from-[#0058F0] to-[#FFD52D] rounded-md flex items-center justify-center">
-              <Rocket className="w-4 h-4 text-white" />
-            </div>
-            <span
-              className="text-lg font-semibold tracking-wider"
-              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-            >
-              Web3Nova
-            </span>
-          </div>
-          <div className="hidden md:flex space-x-10 text-sm">
-            {["Home", "Courses", "Projects", "Events", "About"].map((item) => (
-              <a
-                key={item}
-                href="#"
-                className="text-gray-400 hover:text-white transition-colors"
-              >
-                {item}
-              </a>
-            ))}
-          </div>
-        </div>
-      </motion.nav>
+      {/* 🌌 Animated Gradient Background */}
+      <motion.div
+        className="absolute inset-0 -z-10 bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 dark:from-black dark:via-gray-900 dark:to-gray-800"
+        animate={{
+          backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+        style={{
+          backgroundSize: "400% 400%",
+        }}
+      />
+
+      {/* ✨ Subtle glowing particles */}
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        {[...Array(30)].map((_, i) => (
+          <motion.span
+            key={i}
+            className="absolute rounded-full bg-blue-400/10 dark:bg-yellow-200/10 blur-md"
+            style={{
+              width: Math.random() * 8 + 2,
+              height: Math.random() * 8 + 2,
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -10, 0],
+              opacity: [0.2, 0.8, 0.2],
+            }}
+            transition={{
+              duration: Math.random() * 4 + 3,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
+      </div>
 
       {/* Hero Section */}
       <section className="pt-40 pb-24 px-6 text-center relative overflow-hidden">
@@ -125,7 +132,7 @@ const AboutPage = () => {
           About Web3Nova
         </motion.h1>
         <motion.p
-          className="text-2xl md:text-3xl text-gray-400 max-w-3xl mx-auto font-light tracking-wide"
+          className="text-2xl md:text-3xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto font-light tracking-wide"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 1 }}
@@ -148,12 +155,12 @@ const AboutPage = () => {
             >
               Our Story
             </h2>
-            <p className="text-gray-400 text-base leading-relaxed mb-6 font-light">
+            <p className="text-gray-600 dark:text-gray-400 text-base leading-relaxed mb-6 font-light">
               Web3Nova started as a bold idea to merge Web3 education and
               real-world innovation. We wanted to make blockchain learning
               accessible, hands-on, and exciting.
             </p>
-            <p className="text-gray-400 text-base leading-relaxed font-light">
+            <p className="text-gray-600 dark:text-gray-400 text-base leading-relaxed font-light">
               Today, we’re building an ecosystem that empowers developers,
               designers, and dreamers to explore decentralized technologies and
               create scalable solutions for the world.
@@ -166,19 +173,19 @@ const AboutPage = () => {
             transition={{ duration: 1 }}
           >
             <div className="bg-gradient-to-br from-[#0058F0] to-[#FFD52D] rounded-3xl p-16 flex items-center justify-center shadow-[0_0_40px_#0058F0]/30 group-hover:scale-105 transition-transform duration-500">
-              <div className="w-32 h-40 bg-white rounded-2xl shadow-2xl"></div>
+              <div className="w-32 h-40 bg-white dark:bg-gray-900 rounded-2xl shadow-2xl"></div>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Features */}
-      <section className="py-24 px-6 bg-gradient-to-b from-black to-gray-950">
+      {/* Features Section */}
+      <section className="py-24 px-6">
         <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-10">
           {features.map((feature, index) => (
             <motion.div
               key={index}
-              className="rounded-3xl p-10 border border-gray-800 bg-black hover:border-[#0058F0]/70 transition-all duration-500 hover:scale-105 hover:shadow-[0_0_30px_#0058F0]/30"
+              className="rounded-3xl p-10 border border-gray-300 dark:border-gray-800 bg-white/70 dark:bg-black/70 backdrop-blur-md hover:border-[#0058F0]/70 transition-all duration-500 hover:scale-105 hover:shadow-[0_0_30px_#0058F0]/30"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.2, duration: 0.8 }}
@@ -194,7 +201,7 @@ const AboutPage = () => {
               >
                 {feature.title}
               </h3>
-              <p className="text-gray-400 text-sm leading-relaxed font-light">
+              <p className="text-gray-700 dark:text-gray-400 text-sm leading-relaxed font-light">
                 {feature.description}
               </p>
             </motion.div>
@@ -213,12 +220,12 @@ const AboutPage = () => {
           </h2>
           <motion.div
             key={currentTestimonial}
-            className="relative bg-gradient-to-br from-[#0A0A0A] to-black rounded-3xl p-16 border border-gray-800 min-h-[320px] shadow-[0_0_30px_#0058F0]/10"
+            className="relative bg-gradient-to-br from-gray-100 to-white dark:from-[#0A0A0A] dark:to-black rounded-3xl p-16 border border-gray-200 dark:border-gray-800 min-h-[320px] shadow-[0_0_30px_#0058F0]/10"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6 }}
           >
-            <p className="text-xl text-gray-300 mb-10 leading-relaxed font-light">
+            <p className="text-xl text-gray-700 dark:text-gray-300 mb-10 leading-relaxed font-light">
               “{testimonials[currentTestimonial].text}”
             </p>
             <div className="flex items-center justify-center space-x-4">
@@ -245,7 +252,7 @@ const AboutPage = () => {
                 className={`w-3 h-3 rounded-full transition-all duration-300 ${
                   index === currentTestimonial
                     ? "bg-gradient-to-r from-[#0058F0] to-[#FFD52D] w-10"
-                    : "bg-gray-700"
+                    : "bg-gray-400 dark:bg-gray-700"
                 }`}
               />
             ))}
@@ -254,13 +261,13 @@ const AboutPage = () => {
           <div className="flex justify-center space-x-10 mt-12">
             <button
               onClick={prevTestimonial}
-              className="p-4 bg-gray-900 hover:bg-gray-800 rounded-full border border-gray-800 hover:border-[#0058F0]/70 transition-all duration-300"
+              className="p-4 bg-gray-200 dark:bg-gray-900 hover:bg-gray-300 dark:hover:bg-gray-800 rounded-full border border-gray-300 dark:border-gray-800 hover:border-[#0058F0]/70 transition-all duration-300"
             >
               <ChevronLeft className="w-6 h-6" />
             </button>
             <button
               onClick={nextTestimonial}
-              className="p-4 bg-gray-900 hover:bg-gray-800 rounded-full border border-gray-800 hover:border-[#0058F0]/70 transition-all duration-300"
+              className="p-4 bg-gray-200 dark:bg-gray-900 hover:bg-gray-300 dark:hover:bg-gray-800 rounded-full border border-gray-300 dark:border-gray-800 hover:border-[#0058F0]/70 transition-all duration-300"
             >
               <ChevronRight className="w-6 h-6" />
             </button>
