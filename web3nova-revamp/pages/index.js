@@ -9,12 +9,9 @@ import TestimonialsSection from "@/components/Testimonial";
 import CTASection from "@/components/ContactUs";
 import Footer from "@/components/Footer";
 
+import Web3NovaHomepage from "@/components/Hero";
+import Navigation from "@/components/Hero/navbar";
 export default function Home() {
-  const router = useRouter();
-
-  // Check if the route is "/about"
-  const isAboutPage = router.pathname === "/about";
-
   return (
     <>
       <HeroSection />
@@ -23,6 +20,9 @@ export default function Home() {
       <TestimonialsSection />
       <CTASection />
       <Footer />
+      <Navigation />
+      <Web3NovaHomepage />
+      <Services />
       {/* Show About only on /about */}
     </>
   );
