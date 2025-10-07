@@ -14,15 +14,13 @@ import Navigation from "@/components/Hero/navbar";
 export default function Home() {
   return (
     <>
-      <HeroSection />
+      <Navigation />
+      <Web3NovaHomepage />
       <OverviewSplit />
       <PartnersSection />
       <TestimonialsSection />
       <CTASection />
       <Footer />
-      <Navigation />
-      <Web3NovaHomepage />
-      <Services />
       {/* Show About only on /about */}
     </>
   );
