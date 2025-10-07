@@ -3,7 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { useRouter } from "next/router";
 import About from "../components/About";
 import HeroSection from "@/components/HeroSection";
-
+import OverviewSplit from "@/components/ServiceandAcademy";
+import PartnersSection from "@/components/partners";
 export default function Home() {
   const router = useRouter();
 
@@ -13,6 +14,8 @@ export default function Home() {
   return (
     <>
       <HeroSection />
+      <OverviewSplit />
+      <PartnersSection />
       {/* Show About only on /about */}
     </>
   );
