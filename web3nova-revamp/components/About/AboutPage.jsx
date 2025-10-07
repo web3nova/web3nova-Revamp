@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Shield,
-  Eye,
-  Sparkles,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
+import { Shield, Eye, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 const AboutPage = () => {
@@ -64,22 +58,19 @@ const AboutPage = () => {
     },
   ];
 
-  const nextTestimonial = () => {
+  const nextTestimonial = () =>
     setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
-  };
-
-  const prevTestimonial = () => {
+  const prevTestimonial = () =>
     setCurrentTestimonial(
       (prev) => (prev - 1 + testimonials.length) % testimonials.length
     );
-  };
 
   return (
     <div
       className="relative min-h-screen text-gray-900 dark:text-white overflow-hidden transition-colors duration-700"
       style={{ fontFamily: "'Inter', sans-serif" }}
     >
-      {/* 🌌 Animated Gradient Background */}
+      {/* 🌌 Animated Background */}
       <motion.div
         className="absolute inset-0 -z-10 bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 dark:from-black dark:via-gray-900 dark:to-gray-800"
         animate={{
@@ -90,12 +81,10 @@ const AboutPage = () => {
           repeat: Infinity,
           ease: "linear",
         }}
-        style={{
-          backgroundSize: "400% 400%",
-        }}
+        style={{ backgroundSize: "400% 400%" }}
       />
 
-      {/* ✨ Subtle glowing particles */}
+      {/* ✨ Floating Lights */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         {[...Array(30)].map((_, i) => (
           <motion.span
@@ -107,10 +96,7 @@ const AboutPage = () => {
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
             }}
-            animate={{
-              y: [0, -10, 0],
-              opacity: [0.2, 0.8, 0.2],
-            }}
+            animate={{ y: [0, -10, 0], opacity: [0.2, 0.8, 0.2] }}
             transition={{
               duration: Math.random() * 4 + 3,
               repeat: Infinity,
@@ -120,26 +106,28 @@ const AboutPage = () => {
         ))}
       </div>
 
-      {/* Hero Section */}
-      <section className="pt-40 pb-24 px-6 text-center relative overflow-hidden">
-        <motion.h1
-          className="text-7xl md:text-8xl font-bold mb-8 bg-gradient-to-r from-[#0058F0] via-[#227AFF] to-[#FFD52D] bg-clip-text text-transparent"
-          style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-        >
-          About Web3Nova
-        </motion.h1>
-        <motion.p
-          className="text-2xl md:text-3xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto font-light tracking-wide"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 1 }}
-        >
-          Empowering creators and learners to build the decentralized future.
-        </motion.p>
-      </section>
+     {/* Hero Section */}
+<section className="pt-32 md:pt-40 pb-16 md:pb-24 px-4 sm:px-6 text-center">
+  <motion.h1
+    className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-6 sm:mb-8 bg-gradient-to-r from-[#0058F0] via-[#227AFF] to-[#FFD52D] bg-clip-text text-transparent leading-tight"
+    style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+    initial={{ opacity: 0, y: 30 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 1 }}
+  >
+    About Web3Nova
+  </motion.h1>
+
+  <motion.p
+    className="text-base sm:text-lg md:text-2xl lg:text-3xl text-gray-700 dark:text-gray-300 max-w-lg sm:max-w-2xl md:max-w-3xl mx-auto font-light tracking-wide leading-relaxed"
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay: 0.3, duration: 1 }}
+  >
+    Empowering creators and learners to build the decentralized future.
+  </motion.p>
+</section>
+
 
       {/* Our Story */}
       <section className="py-24 px-6 max-w-7xl mx-auto">
@@ -155,17 +143,18 @@ const AboutPage = () => {
             >
               Our Story
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 text-base leading-relaxed mb-6 font-light">
+            <p className="text-gray-600 dark:text-gray-400 mb-6 font-light leading-relaxed">
               Web3Nova started as a bold idea to merge Web3 education and
               real-world innovation. We wanted to make blockchain learning
               accessible, hands-on, and exciting.
             </p>
-            <p className="text-gray-600 dark:text-gray-400 text-base leading-relaxed font-light">
+            <p className="text-gray-600 dark:text-gray-400 font-light leading-relaxed">
               Today, we’re building an ecosystem that empowers developers,
               designers, and dreamers to explore decentralized technologies and
               create scalable solutions for the world.
             </p>
           </motion.div>
+
           <motion.div
             className="relative group"
             initial={{ opacity: 0, x: 40 }}
@@ -179,33 +168,82 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-24 px-6">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-10">
-          {features.map((feature, index) => (
-            <motion.div
-              key={index}
-              className="rounded-3xl p-10 border border-gray-300 dark:border-gray-800 bg-white/70 dark:bg-black/70 backdrop-blur-md hover:border-[#0058F0]/70 transition-all duration-500 hover:scale-105 hover:shadow-[0_0_30px_#0058F0]/30"
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.2, duration: 0.8 }}
-            >
-              <div
-                className={`bg-gradient-to-br ${feature.gradient} w-20 h-20 rounded-2xl flex items-center justify-center mb-8`}
+      {/* Core Values Section (joined cards) */}
+      <section className="py-32 px-6 bg-gradient-to-b from-transparent to-gray-50 dark:to-[#0A0A0A] relative overflow-hidden">
+        <div className="max-w-7xl mx-auto text-center">
+          <motion.h2
+            className="text-5xl md:text-6xl font-bold mb-20 bg-gradient-to-r from-[#0058F0] via-[#227AFF] to-[#FFD52D] bg-clip-text text-transparent"
+            style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+          >
+            Our Core Values
+          </motion.h2>
+
+          <div className="flex flex-col md:flex-row justify-center items-stretch gap-0 mb-24">
+            {[
+              {
+                title: "Transparency",
+                desc: "Clear processes, open communication, and verifiable blockchain solutions ensure trust at every step.",
+                gradient: "from-[#0058F0] to-[#88B9E6]",
+                rotate: "-rotate-3",
+              },
+              {
+                title: "Security",
+                desc: "Robust encryption, secure smart contracts, and best practices protect your assets and data.",
+                gradient: "from-[#FDB913] to-[#FFD52D]",
+                rotate: "rotate-0 z-10",
+              },
+              {
+                title: "Creativity",
+                desc: "Innovative design, cutting-edge development, and user-first thinking bring your Web3 vision to life.",
+                gradient: "from-[#4A90E2] to-[#0058F0]",
+                rotate: "rotate-3",
+              },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                className={`flex-1 p-10 bg-black/70 dark:bg-gray-900/70 border border-gray-800 backdrop-blur-md shadow-[0_0_40px_rgba(0,88,240,0.1)] transition-all duration-500 hover:scale-105 ${item.rotate}`}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.2, duration: 0.8 }}
               >
-                {feature.icon}
-              </div>
-              <h3
-                className="text-2xl font-bold mb-4"
-                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                <div
+                  className={`w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br ${item.gradient} blur-sm`}
+                />
+                <h3 className="text-2xl font-semibold mb-4 text-white">
+                  {item.title}
+                </h3>
+                <p className="text-gray-400 text-sm leading-relaxed">
+                  {item.desc}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Stats */}
+          <div className="grid md:grid-cols-3 gap-10 border-t border-gray-800 pt-12">
+            {[
+              { value: "70+", label: "Projects Delivered" },
+              { value: "35+", label: "Tokens Launched" },
+              { value: "10+", label: "Blockchain Solutions Implemented" },
+            ].map((stat, i) => (
+              <motion.div
+                key={i}
+                className="flex flex-col items-center"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.2 + 0.5, duration: 0.8 }}
               >
-                {feature.title}
-              </h3>
-              <p className="text-gray-700 dark:text-gray-400 text-sm leading-relaxed font-light">
-                {feature.description}
-              </p>
-            </motion.div>
-          ))}
+                <div className="text-5xl md:text-6xl font-bold text-white mb-2">
+                  {stat.value}
+                </div>
+                <div className="text-gray-400 text-sm tracking-wide">
+                  {stat.label}
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -218,6 +256,7 @@ const AboutPage = () => {
           >
             What Our Partners Say
           </h2>
+
           <motion.div
             key={currentTestimonial}
             className="relative bg-gradient-to-br from-gray-100 to-white dark:from-[#0A0A0A] dark:to-black rounded-3xl p-16 border border-gray-200 dark:border-gray-800 min-h-[320px] shadow-[0_0_30px_#0058F0]/10"
@@ -244,6 +283,7 @@ const AboutPage = () => {
             </div>
           </motion.div>
 
+          {/* Navigation Dots */}
           <div className="flex justify-center space-x-3 mt-10">
             {testimonials.map((_, index) => (
               <button
@@ -258,6 +298,7 @@ const AboutPage = () => {
             ))}
           </div>
 
+          {/* Prev / Next */}
           <div className="flex justify-center space-x-10 mt-12">
             <button
               onClick={prevTestimonial}
