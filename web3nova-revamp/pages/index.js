@@ -12,7 +12,7 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-import About from "../components/About";
+import About from "../components/About/AboutPage";
 import HeroSection from "@/components/HeroSection";
 
 export default function Home() {
