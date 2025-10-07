@@ -1,10 +1,8 @@
 import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
-import HeroSection from "@/components/Hero";
-import Navigation from "@/components/Hero/navbar";
-import Services from "./services";
-
-
+import { useRouter } from "next/router";
+import About from "../components/About";
+import HeroSection from "@/components/HeroSection";
 
 export default function Home() {
 
@@ -12,7 +10,7 @@ export default function Home() {
     <>
       <Navigation />
       <HeroSection />
-      <Services />
+      {/* Show About only on /about */}
     </>
   );
 }
