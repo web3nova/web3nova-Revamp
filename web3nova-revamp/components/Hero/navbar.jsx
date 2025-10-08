@@ -23,7 +23,7 @@ export default function Navigation() {
   }, [isMobileMenuOpen]);
 
   const navLinks = [
-    { name: 'Home', href: '#home' },
+    { name: 'Home', href: '/' },
     { name: 'Training', href: '#training' },
     { name: 'Services', href: '#services' },
     { name: 'Events', href: '#events' },
@@ -33,8 +33,8 @@ export default function Navigation() {
 
   const scrolledNavLinks = [
     { name: 'Home', href: '/' },
-    { name: 'Training', href: '/training' },
-    { name: 'Services', href: '/services' },
+    { name: 'Training', href: '#training' },
+    { name: 'Services', href: '#services' },
     { name: 'Events', href: '/events' },
     { name: 'About Us', href: '/about' },
     { name: 'Contact Us', href: '#contact' },

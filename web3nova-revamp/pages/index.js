@@ -16,12 +16,17 @@ export default function Home() {
     <>
       <Navigation />
       <Web3NovaHomepage />
-      <OverviewSplit />
+      
+      {/* Add id here for smooth scrolling */}
+      <section id="training" className="scroll-mt-20">
+        <span id="services" className="absolute -mt-20"></span>
+        <OverviewSplit />
+      </section>
+      
       <PartnersSection />
       <TestimonialsSection />
       <CTASection />
       <Footer />
-      {/* Show About only on /about */}
     </>
   );
 }
