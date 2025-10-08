@@ -3,7 +3,6 @@ import { motion, useInView } from "framer-motion";
 import { Shield, Award, Users, TrendingUp } from "lucide-react";
 
 const PartnersSection = () => {
-  // Load Google Fonts
   useEffect(() => {
     const link = document.createElement("link");
     link.href =
@@ -12,10 +11,10 @@ const PartnersSection = () => {
     document.head.appendChild(link);
     return () => document.head.removeChild(link);
   }, []);
+  
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: false, amount: 0.3 });
 
-  // Partner logos - representing major Web3 and tech companies
   const partners = [
     { name: "Coinbase", color: "#0052FF" },
     { name: "Binance", color: "#F3BA2F" },
@@ -31,7 +30,6 @@ const PartnersSection = () => {
     { name: "OpenSea", color: "#2081E2" },
   ];
 
-  // Metrics data
   const metrics = [
     {
       icon: Users,
@@ -63,10 +61,7 @@ const PartnersSection = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.1,
-      },
+      transition: { staggerChildren: 0.1, delayChildren: 0.1 },
     },
   };
 
@@ -75,34 +70,113 @@ const PartnersSection = () => {
     visible: {
       opacity: 1,
       y: 0,
-      transition: {
-        duration: 0.5,
-        ease: [0.6, 0.01, 0.05, 0.9],
-      },
+      transition: { duration: 0.5, ease: [0.6, 0.01, 0.05, 0.9] },
     },
   };
 
   return (
-    <div
-      ref={sectionRef}
-      className="relative bg-[#0C0C0C] py-12 md:py-16 overflow-hidden"
-    >
+    <div ref={sectionRef} className="relative bg-[#0C0C0C] py-12 md:py-16 overflow-hidden">
+      <style>{`
+        @keyframes float-slow {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(50px, 50px) scale(1.1); }
+        }
+        @keyframes float-medium {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(-40px, 40px) scale(1.15); }
+        }
+        @keyframes float-fast {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(30px, -30px) scale(1.2); }
+        }
+        @keyframes twinkle {
+          0%, 100% { opacity: 0.3; transform: scale(1); }
+          50% { opacity: 1; transform: scale(1.5); }
+        }
+        @keyframes gradient-shift {
+          0%, 100% { transform: translate(0, 0); }
+          50% { transform: translate(100px, 100px); }
+        }
+        @keyframes grid-flow {
+          0% { transform: translate(0, 0); }
+          100% { transform: translate(50px, 50px); }
+        }
+      `}</style>
+
       {/* Background Effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.05, 0.1, 0.05],
+        <div className="absolute inset-0 opacity-20">
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              backgroundImage: 'linear-gradient(rgba(74, 144, 226, 0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(74, 144, 226, 0.3) 1px, transparent 1px)',
+              backgroundSize: '50px 50px',
+              maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)',
+              WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)',
+              animation: 'grid-flow 20s linear infinite'
+            }}
+          />
+        </div>
+
+        <div
+          style={{
+            position: 'absolute',
+            top: '25%',
+            left: '-8rem',
+            width: '24rem',
+            height: '24rem',
+            borderRadius: '9999px',
+            filter: 'blur(80px)',
+            opacity: 0.3,
+            background: 'radial-gradient(circle, #4A90E2, transparent)',
+            animation: 'float-slow 20s ease-in-out infinite'
           }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "easeInOut",
+        />
+        <div
+          style={{
+            position: 'absolute',
+            top: '50%',
+            right: 0,
+            width: '20rem',
+            height: '20rem',
+            borderRadius: '9999px',
+            filter: 'blur(80px)',
+            opacity: 0.25,
+            background: 'radial-gradient(circle, #FDB913, transparent)',
+            animation: 'float-medium 15s ease-in-out infinite'
           }}
-          className="absolute top-0 left-1/2 transform -translate-x-1/2 w-[800px] h-[800px]"
-        >
-          <div className="w-full h-full bg-gradient-to-r from-[#2B6EFF]/20 via-[#FFC933]/20 to-[#2B6EFF]/20 rounded-full blur-3xl" />
-        </motion.div>
+        />
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '25%',
+            left: '33%',
+            width: '18rem',
+            height: '18rem',
+            borderRadius: '9999px',
+            filter: 'blur(80px)',
+            opacity: 0.2,
+            background: 'radial-gradient(circle, #4A90E2, transparent)',
+            animation: 'float-fast 12s ease-in-out infinite'
+          }}
+        />
+
+        <div className="absolute inset-0 opacity-10">
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'linear-gradient(to bottom right, transparent, rgba(59, 130, 246, 0.2), transparent)',
+              animation: 'gradient-shift 20s ease-in-out infinite'
+            }}
+          />
+        </div>
+
+        <div style={{ position: 'absolute', top: '25%', left: '25%', width: '0.5rem', height: '0.5rem', borderRadius: '9999px', backgroundColor: '#4A90E2', animation: 'twinkle 3s ease-in-out infinite' }} />
+        <div style={{ position: 'absolute', top: '33%', right: '33%', width: '0.5rem', height: '0.5rem', borderRadius: '9999px', backgroundColor: '#FDB913', animation: 'twinkle 3s ease-in-out infinite 1s' }} />
+        <div style={{ position: 'absolute', bottom: '33%', left: '50%', width: '0.5rem', height: '0.5rem', borderRadius: '9999px', backgroundColor: '#88B9E6', animation: 'twinkle 3s ease-in-out infinite 2s' }} />
+        <div style={{ position: 'absolute', top: '66%', right: '25%', width: '0.5rem', height: '0.5rem', borderRadius: '9999px', backgroundColor: '#4A90E2', animation: 'twinkle 3s ease-in-out infinite 1.5s' }} />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
@@ -144,17 +218,13 @@ const PartnersSection = () => {
 
         {/* Partners Carousel */}
         <div className="relative mb-12">
-          {/* Gradient Overlays */}
           <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#0C0C0C] to-transparent z-10 pointer-events-none" />
           <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#0C0C0C] to-transparent z-10 pointer-events-none" />
 
-          {/* Infinite Scroll Container */}
           <div className="overflow-hidden py-6">
             <motion.div
               className="flex space-x-8"
-              animate={{
-                x: [0, -1536],
-              }}
+              animate={{ x: [0, -1536] }}
               transition={{
                 x: {
                   repeat: Infinity,
@@ -164,27 +234,35 @@ const PartnersSection = () => {
                 },
               }}
             >
-              {/* Render partners twice for seamless loop */}
               {[...partners, ...partners].map((partner, index) => (
                 <motion.div
                   key={index}
-                  whileHover={{ scale: 1.05, y: -3 }}
+                  whileHover={{ scale: 1.1, y: -8 }}
                   className="flex-shrink-0 group"
                 >
-                  <div className="relative w-32 h-20 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:border-white/30 group-hover:bg-white/10">
-                    {/* Glow Effect on Hover */}
+                  <div className="relative w-32 h-20 rounded-xl bg-white/5 backdrop-blur-sm flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:bg-white/10">
                     <motion.div
                       className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                       style={{
-                        background: `radial-gradient(circle at center, ${partner.color}20, transparent)`,
+                        background: `radial-gradient(circle at center, ${partner.color}40, transparent)`,
+                      }}
+                    />
+                    
+                    {/* Animated border glow */}
+                    <motion.div
+                      className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      style={{
+                        boxShadow: `0 0 25px ${partner.color}80, inset 0 0 15px ${partner.color}20`,
                       }}
                     />
 
-                    {/* Partner Name/Logo */}
                     <div className="relative z-10">
                       <p
-                        className="text-lg font-bold font-['Space_Grotesk'] transition-colors duration-300"
-                        style={{ color: "#fff" }}
+                        className="text-lg font-bold font-['Space_Grotesk'] transition-all duration-300 group-hover:scale-110"
+                        style={{ 
+                          color: "#fff",
+                          textShadow: `0 0 20px ${partner.color}00`,
+                        }}
                       >
                         {partner.name}
                       </p>
@@ -195,13 +273,10 @@ const PartnersSection = () => {
             </motion.div>
           </div>
 
-          {/* Second Row - Reverse Direction */}
           <div className="overflow-hidden py-6">
             <motion.div
               className="flex space-x-8"
-              animate={{
-                x: [-1536, 0],
-              }}
+              animate={{ x: [-1536, 0] }}
               transition={{
                 x: {
                   repeat: Infinity,
@@ -211,23 +286,28 @@ const PartnersSection = () => {
                 },
               }}
             >
-              {/* Render partners twice for seamless loop */}
               {[...partners, ...partners].map((partner, index) => (
                 <motion.div
                   key={index}
-                  whileHover={{ scale: 1.05, y: -3 }}
+                  whileHover={{ scale: 1.1, y: -8 }}
                   className="flex-shrink-0 group"
                 >
-                  <div className="relative w-32 h-20 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:border-white/30 group-hover:bg-white/10">
-                    {/* Glow Effect on Hover */}
+                  <div className="relative w-32 h-20 rounded-xl bg-white/5 backdrop-blur-sm flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:bg-white/10">
                     <motion.div
                       className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                       style={{
-                        background: `radial-gradient(circle at center, ${partner.color}20, transparent)`,
+                        background: `radial-gradient(circle at center, ${partner.color}40, transparent)`,
+                      }}
+                    />
+                    
+                    {/* Animated border glow */}
+                    <motion.div
+                      className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      style={{
+                        boxShadow: `0 0 25px ${partner.color}80, inset 0 0 15px ${partner.color}20`,
                       }}
                     />
 
-                    {/* Partner Name/Logo */}
                     <div className="relative z-10">
                       <p
                         className="text-lg font-bold font-['Space_Grotesk']"
@@ -267,13 +347,11 @@ const PartnersSection = () => {
                 whileHover={{ y: -5, scale: 1.02 }}
                 className="group relative"
               >
-                <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5 md:p-6 overflow-hidden transition-all duration-300 group-hover:border-white/30 group-hover:bg-white/10">
-                  {/* Background Glow */}
+                <div className="relative bg-white/5 backdrop-blur-sm rounded-xl p-5 md:p-6 overflow-hidden transition-all duration-300 group-hover:bg-white/10">
                   <motion.div
                     className={`absolute inset-0 bg-gradient-to-br ${metric.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}
                   />
 
-                  {/* Icon */}
                   <div className="relative z-10 mb-3">
                     <div
                       className={`inline-flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br ${metric.color} shadow-lg`}
@@ -282,7 +360,6 @@ const PartnersSection = () => {
                     </div>
                   </div>
 
-                  {/* Value */}
                   <motion.div
                     initial={{ scale: 1 }}
                     whileHover={{ scale: 1.05 }}
@@ -298,7 +375,6 @@ const PartnersSection = () => {
                     </div>
                   </motion.div>
 
-                  {/* Hover Border Effect */}
                   <motion.div
                     className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     style={{

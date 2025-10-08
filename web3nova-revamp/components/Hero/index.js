@@ -163,7 +163,7 @@ export default function Web3NovaHomepage() {
               boxShadow: '0 12px 50px rgba(46, 123, 209, 0.5)',
             }}
           >
-            <span className="relative z-10 text-sm md:text-base">Book a call now</span>
+            <span className="relative z-10 text-sm md:text-base">Join Next Cohort</span>
             <div className="absolute inset-0 bg-gradient-to-r from-[#1a5a9f] via-[#2E7BD1] to-[#1a5a9f] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <div className="absolute inset-0 bg-white/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </button>
@@ -174,7 +174,7 @@ export default function Web3NovaHomepage() {
               boxShadow: '0 8px 32px rgba(255, 184, 0, 0.2)',
             }}
           >
-            <span className="relative z-10 text-sm md:text-base">Fill form (alternative)</span>
+            <span className="relative z-10 text-sm md:text-base">Explore Services</span>
             <div className="absolute inset-0 bg-[#FFB800]/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </button>
         </div>

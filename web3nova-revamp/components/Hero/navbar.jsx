@@ -217,8 +217,8 @@ export default function Navigation() {
           }`}
         >
           {/* Menu Header */}
-          <div className="pt-20 pb-6 px-6 border-b border-white/10">
-            <p className="text-sm text-white/60">Navigate to explore</p>
+          <div className="pt-13 pb-6 px-6 border-b border-white/10">
+            
           </div>
 
           {/* Menu Links */}
