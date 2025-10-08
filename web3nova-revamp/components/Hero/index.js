@@ -150,16 +150,10 @@ export default function Web3NovaHomepage() {
 
         {/* Subtitle */}
         <p className="text-base md:text-lg lg:text-xl text-white/80 mb-8 md:mb-10 max-w-2xl leading-relaxed px-4 md:px-6 py-3 md:py-4 rounded-2xl bg-gradient-to-r from-white/5 via-white/10 to-white/5 backdrop-blur-md border border-white/15 shadow-2xl animate-fade-in-up">
-        Web3Nova is your launchpad into the world of Web3. Whether you're looking to start a career in blockchain development through our 16-week hands-on bootcamp, or seeking expert-led design and development services for your Web3 project.
+        Web3Nova is your launchpad into the world of Web3. Whether you&apos;re looking to start a career in blockchain development through our 16-week hands-on bootcamp, or seeking expert-led design and development services for your Web3 project.
         </p>
 
-        {/* Pagination dots */}
-        <div className="flex gap-2 md:gap-2.5 mb-10 md:mb-12">
-          <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-[#2E7BD1] shadow-lg shadow-[#2E7BD1]/50 animate-pulse"></div>
-          <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-white/20 hover:bg-white/40 transition-all cursor-pointer"></div>
-          <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-white/20 hover:bg-white/40 transition-all cursor-pointer"></div>
-          <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-white/20 hover:bg-white/40 transition-all cursor-pointer"></div>
-        </div>
+      
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-3 md:gap-4 w-full sm:w-auto px-4 sm:px-0">
@@ -169,7 +163,7 @@ export default function Web3NovaHomepage() {
               boxShadow: '0 12px 50px rgba(46, 123, 209, 0.5)',
             }}
           >
-            <span className="relative z-10 text-sm md:text-base">Book a call now</span>
+            <span className="relative z-10 text-sm md:text-base">Join Next Cohort</span>
             <div className="absolute inset-0 bg-gradient-to-r from-[#1a5a9f] via-[#2E7BD1] to-[#1a5a9f] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <div className="absolute inset-0 bg-white/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </button>
@@ -180,7 +174,7 @@ export default function Web3NovaHomepage() {
               boxShadow: '0 8px 32px rgba(255, 184, 0, 0.2)',
             }}
           >
-            <span className="relative z-10 text-sm md:text-base">Fill form (alternative)</span>
+            <span className="relative z-10 text-sm md:text-base">Explore Services</span>
             <div className="absolute inset-0 bg-[#FFB800]/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </button>
         </div>

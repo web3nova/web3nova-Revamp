@@ -1,6 +1,6 @@
 
 // ===================================================================
-// Components/Services/CTASection.jsx
+// components/Services/CTASection.jsx
 // ===================================================================
 
 function CTASection() {

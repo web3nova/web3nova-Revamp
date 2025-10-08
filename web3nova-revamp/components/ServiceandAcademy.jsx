@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from "react";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import Link from "next/link";
 import {
   GraduationCap,
   Rocket,
@@ -8,9 +9,90 @@ import {
   Palette,
   Users,
   Zap,
-  BookOpen,
-  Briefcase,
 } from "lucide-react";
+
+// Background Effects Component
+function BackgroundEffects() {
+  return (
+    <>
+      <style>{`
+        @keyframes float-slow {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(50px, 50px) scale(1.1); }
+        }
+        @keyframes float-medium {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(-40px, 40px) scale(1.15); }
+        }
+        @keyframes float-fast {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(30px, -30px) scale(1.2); }
+        }
+        @keyframes twinkle {
+          0%, 100% { opacity: 0.3; transform: scale(1); }
+          50% { opacity: 1; transform: scale(1.5); }
+        }
+        @keyframes gradient-shift {
+          0%, 100% { transform: translate(0, 0); }
+          50% { transform: translate(100px, 100px); }
+        }
+        @keyframes grid-flow {
+          0% { transform: translate(0, 0); }
+          100% { transform: translate(50px, 50px); }
+        }
+        .animate-float-slow { animation: float-slow 20s ease-in-out infinite; }
+        .animate-float-medium { animation: float-medium 15s ease-in-out infinite; }
+        .animate-float-fast { animation: float-fast 12s ease-in-out infinite; }
+        .animate-twinkle { animation: twinkle 3s ease-in-out infinite; }
+        .animate-gradient-shift { animation: gradient-shift 20s ease-in-out infinite; }
+        .animate-grid-flow { animation: grid-flow 20s linear infinite; }
+        .delay-1000 { animation-delay: 1s; }
+        .delay-1500 { animation-delay: 1.5s; }
+        .delay-2000 { animation-delay: 2s; }
+      `}</style>
+      
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Animated Grid */}
+        <div className="absolute inset-0 opacity-20">
+          <div
+            className="absolute inset-0 animate-grid-flow"
+            style={{
+              backgroundImage: `linear-gradient(rgba(74, 144, 226, 0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(74, 144, 226, 0.3) 1px, transparent 1px)`,
+              backgroundSize: '50px 50px',
+              maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)',
+              WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)',
+            }}
+          />
+        </div>
+
+        {/* Floating glossy orbs */}
+        <div
+          className="absolute top-1/4 -left-32 w-96 h-96 rounded-full blur-3xl animate-float-slow opacity-30"
+          style={{ background: "radial-gradient(circle, #4A90E2, transparent)" }}
+        />
+        <div
+          className="absolute top-1/2 right-0 w-80 h-80 rounded-full blur-3xl animate-float-medium opacity-25"
+          style={{ background: "radial-gradient(circle, #FDB913, transparent)" }}
+        />
+        <div
+          className="absolute bottom-1/4 left-1/3 w-72 h-72 rounded-full blur-3xl animate-float-fast opacity-20"
+          style={{ background: "radial-gradient(circle, #4A90E2, transparent)" }}
+        />
+
+        {/* Glossy gradient mesh */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-transparent via-blue-500/20 to-transparent animate-gradient-shift" />
+        </div>
+
+        {/* Shiny particles */}
+        <div className="absolute top-1/4 left-1/4 w-2 h-2 rounded-full animate-twinkle" style={{ backgroundColor: "#4A90E2" }} />
+        <div className="absolute top-1/3 right-1/3 w-2 h-2 rounded-full animate-twinkle delay-1000" style={{ backgroundColor: "#FDB913" }} />
+        <div className="absolute bottom-1/3 left-1/2 w-2 h-2 rounded-full animate-twinkle delay-2000" style={{ backgroundColor: "#88B9E6" }} />
+        <div className="absolute top-2/3 right-1/4 w-2 h-2 rounded-full animate-twinkle delay-1500" style={{ backgroundColor: "#4A90E2" }} />
+      </div>
+    </>
+  );
+}
 
 const OverviewSplit = () => {
   // Load Google Fonts
@@ -22,15 +104,9 @@ const OverviewSplit = () => {
     document.head.appendChild(link);
     return () => document.head.removeChild(link);
   }, []);
+  
   const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: false, amount: 0.3 });
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
+  const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -49,7 +125,7 @@ const OverviewSplit = () => {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.5,
+        duration: 0.6,
         ease: [0.6, 0.01, 0.05, 0.9],
       },
     },
@@ -70,43 +146,11 @@ const OverviewSplit = () => {
   return (
     <div
       ref={sectionRef}
-      className="relative bg-[#0C0C0C] py-12 md:py-16 overflow-hidden"
+      id="training"
+      className="relative bg-[#0C0C0C] py-12 md:py-16 overflow-hidden scroll-mt-20"
     >
       {/* Background Effects */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          style={{ y }}
-          className="absolute top-[20%] left-[-10%] w-[600px] h-[600px] rounded-full"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.08, 0.15, 0.08],
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        >
-          <div className="w-full h-full bg-gradient-to-r from-[#2B6EFF]/20 to-transparent rounded-full blur-3xl" />
-        </motion.div>
-
-        <motion.div
-          style={{ y: useTransform(scrollYProgress, [0, 1], [-30, 30]) }}
-          className="absolute bottom-[10%] right-[-5%] w-[500px] h-[500px] rounded-full"
-          animate={{
-            scale: [1, 1.15, 1],
-            opacity: [0.08, 0.12, 0.08],
-          }}
-          transition={{
-            duration: 18,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2,
-          }}
-        >
-          <div className="w-full h-full bg-gradient-to-l from-[#FFC933]/20 to-transparent rounded-full blur-3xl" />
-        </motion.div>
-      </div>
+      <BackgroundEffects />
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
@@ -164,7 +208,6 @@ const OverviewSplit = () => {
               variants={cardHoverVariants}
               className="relative h-full bg-gradient-to-br from-[#2B6EFF]/10 to-[#71A6FF]/5 rounded-2xl border border-[#2B6EFF]/20 p-6 md:p-8 overflow-hidden backdrop-blur-sm"
             >
-              {/* Card Glow Effect */}
               <motion.div
                 className="absolute inset-0 bg-gradient-to-br from-[#2B6EFF]/0 to-[#2B6EFF]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                 style={{
@@ -173,7 +216,6 @@ const OverviewSplit = () => {
                 }}
               />
 
-              {/* Animated Border Glow */}
               <motion.div
                 className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                 style={{
@@ -182,7 +224,6 @@ const OverviewSplit = () => {
               />
 
               <div className="relative z-10">
-                {/* Icon */}
                 <motion.div
                   whileHover={{ rotate: 5, scale: 1.1 }}
                   className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br from-[#2B6EFF] to-[#71A6FF] mb-4 shadow-lg shadow-[#2B6EFF]/30"
@@ -200,7 +241,6 @@ const OverviewSplit = () => {
                   for the future of tech.
                 </p>
 
-                {/* Features */}
                 <div className="space-y-3 mb-6">
                   {[
                     { icon: Code, text: "Comprehensive Web3 Curriculum" },
@@ -213,7 +253,7 @@ const OverviewSplit = () => {
                       animate={
                         isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }
                       }
-                      transition={{ delay: 0.3 + index * 0.1 }}
+                      transition={{ delay: 0.4 + index * 0.1, duration: 0.5 }}
                       className="flex items-center space-x-3"
                     >
                       <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-[#2B6EFF]/20 flex items-center justify-center">
@@ -226,15 +266,16 @@ const OverviewSplit = () => {
                   ))}
                 </div>
 
-                {/* CTA */}
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="group/btn w-full py-3 rounded-xl bg-gradient-to-r from-[#2B6EFF] to-[#71A6FF] text-white font-semibold flex items-center justify-center space-x-2 shadow-lg shadow-[#2B6EFF]/30 hover:shadow-[#2B6EFF]/50 transition-all font-['Inter'] text-sm"
-                >
-                  <span>Start Learning</span>
-                  <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                </motion.button>
+                <Link href="/training" className="block">
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="group/btn w-full py-3 rounded-xl bg-gradient-to-r from-[#2B6EFF] to-[#71A6FF] text-white font-semibold flex items-center justify-center space-x-2 shadow-lg shadow-[#2B6EFF]/30 hover:shadow-[#2B6EFF]/50 transition-all font-['Inter'] text-sm"
+                  >
+                    <span>Start Learning</span>
+                    <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                  </motion.button>
+                </Link>
 
                 <div className="mt-3 text-center">
                   <span className="text-xs text-gray-500 font-['Inter']">
@@ -256,7 +297,6 @@ const OverviewSplit = () => {
               variants={cardHoverVariants}
               className="relative h-full bg-gradient-to-br from-[#FFC933]/10 to-[#FFC933]/5 rounded-2xl border border-[#FFC933]/20 p-6 md:p-8 overflow-hidden backdrop-blur-sm"
             >
-              {/* Card Glow Effect */}
               <motion.div
                 className="absolute inset-0 bg-gradient-to-br from-[#FFC933]/0 to-[#FFC933]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                 style={{
@@ -265,7 +305,6 @@ const OverviewSplit = () => {
                 }}
               />
 
-              {/* Animated Border Glow */}
               <motion.div
                 className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                 style={{
@@ -274,7 +313,6 @@ const OverviewSplit = () => {
               />
 
               <div className="relative z-10">
-                {/* Icon */}
                 <motion.div
                   whileHover={{ rotate: -5, scale: 1.1 }}
                   className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br from-[#FFC933] to-[#FFB300] mb-4 shadow-lg shadow-[#FFC933]/30"
@@ -292,7 +330,6 @@ const OverviewSplit = () => {
                   and captivate.
                 </p>
 
-                {/* Features */}
                 <div className="space-y-3 mb-6">
                   {[
                     { icon: Palette, text: "World-Class UI/UX Design" },
@@ -305,7 +342,7 @@ const OverviewSplit = () => {
                       animate={
                         isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }
                       }
-                      transition={{ delay: 0.3 + index * 0.1 }}
+                      transition={{ delay: 0.4 + index * 0.1, duration: 0.5 }}
                       className="flex items-center space-x-3"
                     >
                       <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-[#FFC933]/20 flex items-center justify-center">
@@ -318,15 +355,16 @@ const OverviewSplit = () => {
                   ))}
                 </div>
 
-                {/* CTA */}
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="group/btn w-full py-3 rounded-xl bg-gradient-to-r from-[#FFC933] to-[#FFB300] text-[#0C0C0C] font-semibold flex items-center justify-center space-x-2 shadow-lg shadow-[#FFC933]/30 hover:shadow-[#FFC933]/50 transition-all font-['Inter'] text-sm"
-                >
-                  <span>View Our Work</span>
-                  <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                </motion.button>
+                <Link href="/services" className="block">
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="group/btn w-full py-3 rounded-xl bg-gradient-to-r from-[#FFC933] to-[#FFB300] text-[#0C0C0C] font-semibold flex items-center justify-center space-x-2 shadow-lg shadow-[#FFC933]/30 hover:shadow-[#FFC933]/50 transition-all font-['Inter'] text-sm"
+                  >
+                    <span>View Our Work</span>
+                    <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                  </motion.button>
+                </Link>
 
                 <div className="mt-3 text-center">
                   <span className="text-xs text-gray-500 font-['Inter']">
@@ -342,7 +380,7 @@ const OverviewSplit = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
           className="mt-10 md:mt-12 text-center"
         >
           <p className="text-gray-500 text-xs mb-6 font-['Inter']">
@@ -364,7 +402,7 @@ const OverviewSplit = () => {
                     ? { opacity: 1, scale: 1 }
                     : { opacity: 0, scale: 0.8 }
                 }
-                transition={{ duration: 0.4, delay: 0.6 + index * 0.1 }}
+                transition={{ duration: 0.5, delay: 0.7 + index * 0.1 }}
                 className="relative group"
               >
                 <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-[#2B6EFF] to-[#FFC933] bg-clip-text text-transparent mb-1 font-['Space_Grotesk']">
@@ -374,7 +412,6 @@ const OverviewSplit = () => {
                   {stat.label}
                 </div>
 
-                {/* Hover Glow */}
                 <motion.div className="absolute inset-0 rounded-lg bg-gradient-to-r from-[#2B6EFF]/0 to-[#FFC933]/0 group-hover:from-[#2B6EFF]/10 group-hover:to-[#FFC933]/10 transition-all duration-300 -z-10" />
               </motion.div>
             ))}

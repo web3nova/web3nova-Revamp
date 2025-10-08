@@ -15,18 +15,31 @@ const geistMono = Geist_Mono({
 });
 
 import HeroSection from "@/components/HeroSection";
+import OverviewSplit from "@/components/ServiceandAcademy";
+import PartnersSection from "@/components/partners";
+import TestimonialsSection from "@/components/Testimonial";
+import CTASection from "@/components/ContactUs";
+import Footer from "@/components/Footer";
 
+import Web3NovaHomepage from "@/components/Hero";
+import Navigation from "@/components/Hero/navbar";
 export default function Home() {
-  const router = useRouter();
 
-  // Check if the route is "/about"
-  const isAboutPage = router.pathname === "/about";
-  const isTrainingPage = router.pathname === "/training";
   return (
     <>
       <Navigation />
-      <HeroSection />
-      {/* Show About only on /about */}
+      <Web3NovaHomepage />
+      
+      {/* Add id here for smooth scrolling */}
+      <section id="training" className="scroll-mt-20">
+        <span id="services" className="absolute -mt-20"></span>
+        <OverviewSplit />
+      </section>
+      
+      <PartnersSection />
+      <TestimonialsSection />
+      <CTASection />
+      <Footer />
     </>
   );
 }

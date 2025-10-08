@@ -1,5 +1,5 @@
 // ===================================================================
-// Components/Services/HeroSection.jsx
+// components/Services/HeroSection.jsx
 // ===================================================================
 
 function HeroSection({ darkMode }) {
@@ -10,7 +10,6 @@ function HeroSection({ darkMode }) {
           style={{ backgroundColor: '#88B9E6', fontFamily: 'Space Grotesk, sans-serif' }}
         >
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
-          <span className="relative font-semibold text-white">✨ Web3 Specialist</span>
         </div>
         <h1 
           className={`text-5xl md:text-7xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-black'}`}

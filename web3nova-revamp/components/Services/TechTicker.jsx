@@ -1,4 +1,4 @@
-// Components/Services/TechTicker.jsx
+// components/Services/TechTicker.jsx
 import { 
     Code2, Blocks, Wallet, Shield, Zap, Globe, 
     Server, Database, Lock, Key, Coins, 
