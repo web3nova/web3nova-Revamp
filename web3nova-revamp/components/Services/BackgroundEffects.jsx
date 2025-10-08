@@ -91,3 +91,5 @@ function BackgroundEffects() {
     </div>
   );
 }
+
+export default BackgroundEffects;  // ← ADD THIS LINE
