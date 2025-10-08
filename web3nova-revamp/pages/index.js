@@ -24,6 +24,7 @@ export default function Home() {
   const isTrainingPage = router.pathname === "/training";
   return (
     <>
+      <Navigation />
       <HeroSection />
       {/* Show About only on /about */}
     </>
