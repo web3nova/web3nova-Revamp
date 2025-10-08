@@ -4,15 +4,15 @@ import { useRouter } from "next/router";
 import About from "@/components/About/AboutPage";
 import Training from "@/components/Training/Training";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+// const geistSans = Geist({
+//   variable: "--font-geist-sans",
+//   subsets: ["latin"],
+// });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// const geistMono = Geist_Mono({
+//   variable: "--font-geist-mono",
+//   subsets: ["latin"],
+// });
 
 import HeroSection from "@/components/HeroSection";
 import OverviewSplit from "@/components/ServiceandAcademy";
@@ -24,18 +24,17 @@ import Footer from "@/components/Footer";
 import Web3NovaHomepage from "@/components/Hero";
 import Navigation from "@/components/Hero/navbar";
 export default function Home() {
-
   return (
     <>
       <Navigation />
       <Web3NovaHomepage />
-      
+
       {/* Add id here for smooth scrolling */}
       <section id="training" className="scroll-mt-20">
         <span id="services" className="absolute -mt-20"></span>
         <OverviewSplit />
       </section>
-      
+
       <PartnersSection />
       <TestimonialsSection />
       <CTASection />
