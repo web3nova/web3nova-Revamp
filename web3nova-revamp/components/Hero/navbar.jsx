@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter, usePathname } from 'next/navigation';
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter, usePathname } from "next/navigation";
+import ContactModal from "../ContactModal";
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -14,15 +16,15 @@ export default function Navigation() {
       setIsScrolled(window.scrollY > 50);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
     if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
   }, [isMobileMenuOpen]);
 
@@ -32,25 +34,25 @@ export default function Navigation() {
     setIsMobileMenuOpen(false);
 
     // Check if it's a hash link
-    if (href.startsWith('#')) {
+    if (href.startsWith("#")) {
       // If we're on the home page, scroll to section
-      if (pathname === '/') {
+      if (pathname === "/") {
         const element = document.querySelector(href);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
+          element.scrollIntoView({ behavior: "smooth" });
         }
       } else {
         // Navigate to home page with hash
         router.push(`/${href}`);
       }
-    } else if (href.includes('#')) {
+    } else if (href.includes("#")) {
       // Handle links like /services#training
-      const [path, hash] = href.split('#');
+      const [path, hash] = href.split("#");
       if (pathname === path) {
         // Same page, just scroll
         const element = document.querySelector(`#${hash}`);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
+          element.scrollIntoView({ behavior: "smooth" });
         }
       } else {
         // Navigate to different page with hash
@@ -63,12 +65,12 @@ export default function Navigation() {
   };
 
   const navLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'Training', href: '/#training' },
-    { name: 'Services', href: '/services' },
-    { name: 'Events', href: '/events' },
-    { name: 'About Us', href: '/about' },
-    { name: 'Contact Us', href: '/#contact' },
+    { name: "Home", href: "/" },
+    { name: "Training", href: "/#training" },
+    { name: "Services", href: "/services" },
+    { name: "Events", href: "/events" },
+    { name: "About Us", href: "/about" },
+    { name: "Contact Us", href: "/#bookacall" },
   ];
 
   return (
@@ -76,33 +78,35 @@ export default function Navigation() {
       {/* Desktop & Tablet Navigation */}
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out hidden md:block ${
-          isScrolled ? 'py-3' : 'py-6'
+          isScrolled ? "py-3" : "py-6"
         }`}
-        style={{ fontFamily: 'Space Grotesk, sans-serif' }}
+        style={{ fontFamily: "Space Grotesk, sans-serif" }}
       >
         {/* Background that appears when scrolled */}
         <div
           className={`absolute inset-0 transition-all duration-500 ${
             isScrolled
-              ? 'bg-[#1a1a2e]/90 backdrop-blur-2xl border-b border-white/10 shadow-2xl opacity-100'
-              : 'opacity-0'
+              ? "bg-[#1a1a2e]/90 backdrop-blur-2xl border-b border-white/10 shadow-2xl opacity-100"
+              : "opacity-0"
           }`}
         ></div>
 
-        <div className={`relative mx-auto px-6 lg:px-8 transition-all duration-500 ${
-          isScrolled ? 'max-w-7xl' : 'max-w-full px-8 lg:px-16'
-        }`}>
+        <div
+          className={`relative mx-auto px-6 lg:px-8 transition-all duration-500 ${
+            isScrolled ? "max-w-7xl" : "max-w-full px-8 lg:px-16"
+          }`}
+        >
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2">
-              <div 
+              <div
                 className={`relative flex items-center justify-center transition-all duration-500 ${
-                  isScrolled ? 'w-16 h-16' : 'w-24 h-24'
+                  isScrolled ? "w-16 h-16" : "w-24 h-24"
                 }`}
               >
-                <Image 
-                  src="/web3Nova.svg" 
-                  alt="Web3Nova Logo" 
+                <Image
+                  src="/web3Nova.svg"
+                  alt="Web3Nova Logo"
                   fill
                   className="object-contain"
                   priority
@@ -126,14 +130,19 @@ export default function Navigation() {
             </div>
 
             {/* CTA Button - Only visible when scrolled */}
-            <div className={`transition-all duration-500 ${
-              isScrolled ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none absolute'
-            }`}>
+            <div
+              className={`transition-all duration-500 ${
+                isScrolled
+                  ? "opacity-100 scale-100"
+                  : "opacity-0 scale-95 pointer-events-none absolute"
+              }`}
+            >
               <button
                 className="group relative px-6 py-2.5 bg-gradient-to-r from-[#2E7BD1] to-[#92B4E4] text-white rounded-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-105 text-sm whitespace-nowrap font-semibold"
                 style={{
-                  boxShadow: '0 8px 32px rgba(46, 123, 209, 0.4)',
+                  boxShadow: "0 8px 32px rgba(46, 123, 209, 0.4)",
                 }}
+                onClick={() => setIsModalOpen(true)}
               >
                 <span className="relative z-10">Book a call now</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-[#1a5a9f] via-[#2E7BD1] to-[#1a5a9f] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -149,22 +158,25 @@ export default function Navigation() {
       </nav>
 
       {/* Mobile Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 md:hidden" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+      <nav
+        className="fixed top-0 left-0 right-0 z-50 md:hidden"
+        style={{ fontFamily: "Space Grotesk, sans-serif" }}
+      >
         {/* Mobile Nav Bar */}
         <div
           className={`transition-all duration-500 ${
             isScrolled
-              ? 'bg-[#1a1a2e]/95 backdrop-blur-2xl border-b border-white/10 shadow-2xl'
-              : 'bg-transparent backdrop-blur-md'
+              ? "bg-[#1a1a2e]/95 backdrop-blur-2xl border-b border-white/10 shadow-2xl"
+              : "bg-transparent backdrop-blur-md"
           }`}
         >
           <div className="px-4 py-3 flex items-center justify-between">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2">
               <div className="relative w-14 h-14 flex items-center justify-center">
-                <Image 
-                  src="/web3Nova.svg" 
-                  alt="Web3Nova Logo" 
+                <Image
+                  src="/web3Nova.svg"
+                  alt="Web3Nova Logo"
                   fill
                   className="object-contain"
                   priority
@@ -179,8 +191,9 @@ export default function Navigation() {
                 <button
                   className="px-4 py-2 bg-gradient-to-r from-[#2E7BD1] to-[#92B4E4] text-white rounded-lg text-sm transition-all duration-300 active:scale-95 whitespace-nowrap font-semibold"
                   style={{
-                    boxShadow: '0 4px 20px rgba(46, 123, 209, 0.4)',
+                    boxShadow: "0 4px 20px rgba(46, 123, 209, 0.4)",
                   }}
+                  onClick={() => setIsModalOpen(true)}
                 >
                   Book a call
                 </button>
@@ -223,13 +236,13 @@ export default function Navigation() {
       {/* Mobile Menu Overlay */}
       <div
         className={`fixed inset-0 z-40 md:hidden transition-all duration-500 ${
-          isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+          isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
       >
         {/* Backdrop */}
         <div
           className={`absolute inset-0 bg-black/70 backdrop-blur-xl transition-opacity duration-500 ${
-            isMobileMenuOpen ? 'opacity-100' : 'opacity-0'
+            isMobileMenuOpen ? "opacity-100" : "opacity-0"
           }`}
           onClick={() => setIsMobileMenuOpen(false)}
         ></div>
@@ -237,7 +250,7 @@ export default function Navigation() {
         {/* Menu Panel */}
         <div
           className={`absolute top-0 right-0 h-full w-[85%] max-w-sm bg-gradient-to-br from-[#0a0a0a] via-[#0f0f1a] to-[#0a0a0a] border-l border-white/10 shadow-2xl transition-transform duration-500 ${
-            isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+            isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
           {/* Menu Header */}
@@ -246,9 +259,13 @@ export default function Navigation() {
           </div>
 
           {/* Menu Links */}
-          <div className={`py-6 px-6 space-y-1 overflow-y-auto ${
-            isScrolled ? 'max-h-[calc(100vh-200px)]' : 'max-h-[calc(100vh-280px)]'
-          }`}>
+          <div
+            className={`py-6 px-6 space-y-1 overflow-y-auto ${
+              isScrolled
+                ? "max-h-[calc(100vh-200px)]"
+                : "max-h-[calc(100vh-280px)]"
+            }`}
+          >
             {navLinks.map((link, index) => (
               <a
                 key={link.name}
@@ -256,7 +273,9 @@ export default function Navigation() {
                 onClick={(e) => handleNavClick(e, link.href)}
                 className="block px-4 py-3.5 text-white/80 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-300 group cursor-pointer"
                 style={{
-                  animation: isMobileMenuOpen ? `slideIn 0.3s ease-out ${index * 0.05}s forwards` : 'none',
+                  animation: isMobileMenuOpen
+                    ? `slideIn 0.3s ease-out ${index * 0.05}s forwards`
+                    : "none",
                   opacity: 0,
                 }}
               >
@@ -273,7 +292,7 @@ export default function Navigation() {
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="w-full py-4 bg-gradient-to-r from-[#2E7BD1] via-[#92B4E4] to-[#2E7BD1] text-white rounded-xl transition-all duration-300 active:scale-95 shadow-lg font-semibold"
                 style={{
-                  boxShadow: '0 8px 32px rgba(46, 123, 209, 0.5)',
+                  boxShadow: "0 8px 32px rgba(46, 123, 209, 0.5)",
                 }}
               >
                 Book a call now
@@ -282,19 +301,20 @@ export default function Navigation() {
           )}
 
           {/* Decorative gradient */}
-          <div 
+          <div
             className="absolute -bottom-20 -right-20 w-60 h-60 rounded-full opacity-20 pointer-events-none"
             style={{
-              background: 'radial-gradient(circle, rgba(46, 123, 209, 0.6), transparent)',
-              filter: 'blur(60px)',
+              background:
+                "radial-gradient(circle, rgba(46, 123, 209, 0.6), transparent)",
+              filter: "blur(60px)",
             }}
           ></div>
         </div>
       </div>
 
       <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
-        
+        @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap");
+
         @keyframes slideIn {
           from {
             opacity: 0;
@@ -306,6 +326,11 @@ export default function Navigation() {
           }
         }
       `}</style>
+
+      <ContactModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </>
   );
 }
