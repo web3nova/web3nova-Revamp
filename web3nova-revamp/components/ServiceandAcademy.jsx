@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
+import Link from "next/link";
 import {
   GraduationCap,
   Rocket,
@@ -105,7 +106,7 @@ const OverviewSplit = () => {
   }, []);
   
   const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: false, amount: 0.3 });
+  const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -124,7 +125,7 @@ const OverviewSplit = () => {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.5,
+        duration: 0.6,
         ease: [0.6, 0.01, 0.05, 0.9],
       },
     },
@@ -145,7 +146,8 @@ const OverviewSplit = () => {
   return (
     <div
       ref={sectionRef}
-      className="relative bg-[#0C0C0C] py-12 md:py-16 overflow-hidden"
+      id="training"
+      className="relative bg-[#0C0C0C] py-12 md:py-16 overflow-hidden scroll-mt-20"
     >
       {/* Background Effects */}
       <BackgroundEffects />
@@ -251,7 +253,7 @@ const OverviewSplit = () => {
                       animate={
                         isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }
                       }
-                      transition={{ delay: 0.3 + index * 0.1 }}
+                      transition={{ delay: 0.4 + index * 0.1, duration: 0.5 }}
                       className="flex items-center space-x-3"
                     >
                       <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-[#2B6EFF]/20 flex items-center justify-center">
@@ -264,14 +266,16 @@ const OverviewSplit = () => {
                   ))}
                 </div>
 
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="group/btn w-full py-3 rounded-xl bg-gradient-to-r from-[#2B6EFF] to-[#71A6FF] text-white font-semibold flex items-center justify-center space-x-2 shadow-lg shadow-[#2B6EFF]/30 hover:shadow-[#2B6EFF]/50 transition-all font-['Inter'] text-sm"
-                >
-                  <span>Start Learning</span>
-                  <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                </motion.button>
+                <Link href="/training" className="block">
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="group/btn w-full py-3 rounded-xl bg-gradient-to-r from-[#2B6EFF] to-[#71A6FF] text-white font-semibold flex items-center justify-center space-x-2 shadow-lg shadow-[#2B6EFF]/30 hover:shadow-[#2B6EFF]/50 transition-all font-['Inter'] text-sm"
+                  >
+                    <span>Start Learning</span>
+                    <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                  </motion.button>
+                </Link>
 
                 <div className="mt-3 text-center">
                   <span className="text-xs text-gray-500 font-['Inter']">
@@ -338,7 +342,7 @@ const OverviewSplit = () => {
                       animate={
                         isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }
                       }
-                      transition={{ delay: 0.3 + index * 0.1 }}
+                      transition={{ delay: 0.4 + index * 0.1, duration: 0.5 }}
                       className="flex items-center space-x-3"
                     >
                       <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-[#FFC933]/20 flex items-center justify-center">
@@ -351,14 +355,16 @@ const OverviewSplit = () => {
                   ))}
                 </div>
 
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="group/btn w-full py-3 rounded-xl bg-gradient-to-r from-[#FFC933] to-[#FFB300] text-[#0C0C0C] font-semibold flex items-center justify-center space-x-2 shadow-lg shadow-[#FFC933]/30 hover:shadow-[#FFC933]/50 transition-all font-['Inter'] text-sm"
-                >
-                  <span>View Our Work</span>
-                  <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                </motion.button>
+                <Link href="/services" className="block">
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="group/btn w-full py-3 rounded-xl bg-gradient-to-r from-[#FFC933] to-[#FFB300] text-[#0C0C0C] font-semibold flex items-center justify-center space-x-2 shadow-lg shadow-[#FFC933]/30 hover:shadow-[#FFC933]/50 transition-all font-['Inter'] text-sm"
+                  >
+                    <span>View Our Work</span>
+                    <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                  </motion.button>
+                </Link>
 
                 <div className="mt-3 text-center">
                   <span className="text-xs text-gray-500 font-['Inter']">
@@ -374,7 +380,7 @@ const OverviewSplit = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
           className="mt-10 md:mt-12 text-center"
         >
           <p className="text-gray-500 text-xs mb-6 font-['Inter']">
@@ -396,7 +402,7 @@ const OverviewSplit = () => {
                     ? { opacity: 1, scale: 1 }
                     : { opacity: 0, scale: 0.8 }
                 }
-                transition={{ duration: 0.4, delay: 0.6 + index * 0.1 }}
+                transition={{ duration: 0.5, delay: 0.7 + index * 0.1 }}
                 className="relative group"
               >
                 <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-[#2B6EFF] to-[#FFC933] bg-clip-text text-transparent mb-1 font-['Space_Grotesk']">

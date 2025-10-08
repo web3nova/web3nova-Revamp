@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter, usePathname } from 'next/navigation';
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,35 +26,59 @@ export default function Navigation() {
     }
   }, [isMobileMenuOpen]);
 
+  // Function to handle navigation with hash
+  const handleNavClick = (e, href) => {
+    e.preventDefault();
+    setIsMobileMenuOpen(false);
+
+    // Check if it's a hash link
+    if (href.startsWith('#')) {
+      // If we're on the home page, scroll to section
+      if (pathname === '/') {
+        const element = document.querySelector(href);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      } else {
+        // Navigate to home page with hash
+        router.push(`/${href}`);
+      }
+    } else if (href.includes('#')) {
+      // Handle links like /services#training
+      const [path, hash] = href.split('#');
+      if (pathname === path) {
+        // Same page, just scroll
+        const element = document.querySelector(`#${hash}`);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      } else {
+        // Navigate to different page with hash
+        router.push(href);
+      }
+    } else {
+      // Regular navigation
+      router.push(href);
+    }
+  };
+
   const navLinks = [
     { name: 'Home', href: '/' },
-    { name: 'Training', href: '#training' },
-    { name: 'Services', href: '#services' },
-    { name: 'Events', href: '#events' },
-    { name: 'About Us', href: '#about' },
-    { name: 'Contact Us', href: '#contact' },
-  ];
-
-  const scrolledNavLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'Training', href: '#training' },
-    { name: 'Services', href: '#services' },
-    { name: 'Events', href: '/events' },
+    { name: 'Training', href: '/#training' },
+    { name: 'Services', href: '/services' },
+    { name: 'Events', href: '/#events' },
     { name: 'About Us', href: '/about' },
-    { name: 'Contact Us', href: '#contact' },
+    { name: 'Contact Us', href: '/#contact' },
   ];
-
-  const displayLinks = isScrolled ? scrolledNavLinks : navLinks;
 
   return (
     <>
       {/* Desktop & Tablet Navigation */}
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out hidden md:block ${
-          isScrolled
-            ? 'py-3'
-            : 'py-6'
+          isScrolled ? 'py-3' : 'py-6'
         }`}
+        style={{ fontFamily: 'Space Grotesk, sans-serif' }}
       >
         {/* Background that appears when scrolled */}
         <div
@@ -66,7 +94,7 @@ export default function Navigation() {
         }`}>
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <div className="flex items-center gap-2">
+            <Link href="/" className="flex items-center gap-2">
               <div 
                 className={`relative flex items-center justify-center transition-all duration-500 ${
                   isScrolled ? 'w-16 h-16' : 'w-24 h-24'
@@ -74,22 +102,22 @@ export default function Navigation() {
               >
                 <Image 
                   src="/web3Nova.svg" 
-                  alt="Logo" 
+                  alt="Web3Nova Logo" 
                   fill
                   className="object-contain"
                   priority
                 />
               </div>
-             
-            </div>
+            </Link>
 
             {/* Desktop Navigation */}
             <div className="flex items-center gap-8">
-              {displayLinks.map((link) => (
+              {navLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
-                  className="text-sm font-medium text-white/80 hover:text-white transition-all duration-300 hover:scale-105 relative group"
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className="text-sm font-medium text-white/80 hover:text-white transition-all duration-300 hover:scale-105 relative group cursor-pointer"
                 >
                   {link.name}
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#2E7BD1] to-[#92B4E4] transition-all duration-300 group-hover:w-full"></span>
@@ -102,11 +130,9 @@ export default function Navigation() {
               isScrolled ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none absolute'
             }`}>
               <button
-                className="group relative px-6 py-2.5 bg-gradient-to-r from-[#2E7BD1] to-[#92B4E4] text-white rounded-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-105 text-sm whitespace-nowrap"
+                className="group relative px-6 py-2.5 bg-gradient-to-r from-[#2E7BD1] to-[#92B4E4] text-white rounded-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-105 text-sm whitespace-nowrap font-semibold"
                 style={{
                   boxShadow: '0 8px 32px rgba(46, 123, 209, 0.4)',
-                  fontFamily: 'Space Grotesk, sans-serif',
-                  fontWeight: 600,
                 }}
               >
                 <span className="relative z-10">Book a call now</span>
@@ -123,7 +149,7 @@ export default function Navigation() {
       </nav>
 
       {/* Mobile Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 md:hidden">
+      <nav className="fixed top-0 left-0 right-0 z-50 md:hidden" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
         {/* Mobile Nav Bar */}
         <div
           className={`transition-all duration-500 ${
@@ -134,31 +160,29 @@ export default function Navigation() {
         >
           <div className="px-4 py-3 flex items-center justify-between">
             {/* Logo */}
-            <div className="flex items-center gap-2">
+            <Link href="/" className="flex items-center gap-2">
               <div className="relative w-14 h-14 flex items-center justify-center">
                 <Image 
                   src="/web3Nova.svg" 
-                  alt="Logo" 
+                  alt="Web3Nova Logo" 
                   fill
                   className="object-contain"
                   priority
                 />
               </div>
-            </div>
+            </Link>
 
             {/* Right side: CTA + Menu */}
             <div className="flex items-center gap-3">
               {/* Mobile CTA - visible only when scrolled */}
               {isScrolled && (
                 <button
-                  className="px-4 py-2 bg-gradient-to-r from-[#2E7BD1] to-[#92B4E4] text-white rounded-lg text-sm transition-all duration-300 active:scale-95 whitespace-nowrap"
+                  className="px-4 py-2 bg-gradient-to-r from-[#2E7BD1] to-[#92B4E4] text-white rounded-lg text-sm transition-all duration-300 active:scale-95 whitespace-nowrap font-semibold"
                   style={{
                     boxShadow: '0 4px 20px rgba(46, 123, 209, 0.4)',
-                    fontFamily: 'Space Grotesk, sans-serif',
-                    fontWeight: 600,
                   }}
                 >
-                  Book a call now
+                  Book a call
                 </button>
               )}
 
@@ -217,20 +241,20 @@ export default function Navigation() {
           }`}
         >
           {/* Menu Header */}
-          <div className="pt-13 pb-6 px-6 border-b border-white/10">
-            
+          <div className="pt-20 pb-6 px-6 border-b border-white/10">
+            <h2 className="text-xl font-bold text-white">Menu</h2>
           </div>
 
           {/* Menu Links */}
           <div className={`py-6 px-6 space-y-1 overflow-y-auto ${
             isScrolled ? 'max-h-[calc(100vh-200px)]' : 'max-h-[calc(100vh-280px)]'
           }`}>
-            {displayLinks.map((link, index) => (
+            {navLinks.map((link, index) => (
               <a
                 key={link.name}
                 href={link.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block px-4 py-3.5 text-white/80 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-300 group"
+                onClick={(e) => handleNavClick(e, link.href)}
+                className="block px-4 py-3.5 text-white/80 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-300 group cursor-pointer"
                 style={{
                   animation: isMobileMenuOpen ? `slideIn 0.3s ease-out ${index * 0.05}s forwards` : 'none',
                   opacity: 0,
@@ -247,11 +271,9 @@ export default function Navigation() {
             <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a] to-transparent">
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="w-full py-4 bg-gradient-to-r from-[#2E7BD1] via-[#92B4E4] to-[#2E7BD1] text-white rounded-xl transition-all duration-300 active:scale-95 shadow-lg"
+                className="w-full py-4 bg-gradient-to-r from-[#2E7BD1] via-[#92B4E4] to-[#2E7BD1] text-white rounded-xl transition-all duration-300 active:scale-95 shadow-lg font-semibold"
                 style={{
                   boxShadow: '0 8px 32px rgba(46, 123, 209, 0.5)',
-                  fontFamily: 'Space Grotesk, sans-serif',
-                  fontWeight: 600,
                 }}
               >
                 Book a call now
