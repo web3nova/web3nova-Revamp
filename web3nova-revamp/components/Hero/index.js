@@ -150,7 +150,7 @@ export default function Web3NovaHomepage() {
 
         {/* Subtitle */}
         <p className="text-base md:text-lg lg:text-xl text-white/80 mb-8 md:mb-10 max-w-2xl leading-relaxed px-4 md:px-6 py-3 md:py-4 rounded-2xl bg-gradient-to-r from-white/5 via-white/10 to-white/5 backdrop-blur-md border border-white/15 shadow-2xl animate-fade-in-up">
-        Web3Nova is your launchpad into the world of Web3. Whether you're looking to start a career in blockchain development through our 16-week hands-on bootcamp, or seeking expert-led design and development services for your Web3 project.
+        Web3Nova is your launchpad into the world of Web3. Whether you&apos;re looking to start a career in blockchain development through our 16-week hands-on bootcamp, or seeking expert-led design and development services for your Web3 project.
         </p>
 
       

@@ -1,5 +1,5 @@
 // ===================================================================
-// Components/Services/TechStack.jsx
+// components/Services/TechStack.jsx
 // ===================================================================
 
 function TechStack({ darkMode }) {

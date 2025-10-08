@@ -1,5 +1,5 @@
 // ===================================================================
-// Components/Services/HeroSection.jsx
+// components/Services/HeroSection.jsx
 // ===================================================================
 
 function HeroSection({ darkMode }) {

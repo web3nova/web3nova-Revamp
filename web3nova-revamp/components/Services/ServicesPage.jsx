@@ -1,4 +1,4 @@
-// Components/Services/ServicesPage.jsx
+// components/Services/ServicesPage.jsx
 import React, { useState } from 'react';
 import HeroSection from './HeroSection';
 import TechTicker from './TechTicker';

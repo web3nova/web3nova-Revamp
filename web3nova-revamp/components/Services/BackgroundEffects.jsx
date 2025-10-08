@@ -1,5 +1,5 @@
 // ===================================================================
-// Components/Services/BackgroundEffects.jsx
+// components/Services/BackgroundEffects.jsx
 // ===================================================================
 
 function BackgroundEffects({ darkMode }) {

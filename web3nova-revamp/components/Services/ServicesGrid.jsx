@@ -1,5 +1,5 @@
 // ===================================================================
-// Components/Services/ServicesGrid.jsx
+// components/Services/ServicesGrid.jsx
 // ===================================================================
 
 function ServicesGrid({ darkMode }) {
