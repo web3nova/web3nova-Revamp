@@ -297,7 +297,7 @@ const AboutPage = () => {
   <motion.img
     src="/web3conference.png"
     alt=""
-    className="rounded-md"
+    className="rounded-4xl shadow-lg w-full h-auto object-cover"
     transition={{ duration: 0.3 }}
     whileHover={{ filter: 'brightness(1.2) contrast(1.1)' }}
   />
