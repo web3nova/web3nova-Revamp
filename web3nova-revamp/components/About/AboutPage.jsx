@@ -241,13 +241,13 @@ const AboutPage = () => {
       {/* Hero Section */}
       <section className="pt-32 md:pt-40 pb-16 md:pb-24 px-4 sm:px-6 text-center">
         <motion.h1
-          className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-6 sm:mb-8 bg-gradient-to-r from-[#0058F0] via-[#227AFF] to-[#FFD52D] bg-clip-text text-transparent leading-tight"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-6 sm:mb-8 text-white leading-tight"
           style={{ fontFamily: "'Space Grotesk', sans-serif" }}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          About Web3Nova
+          About <span className="bg-gradient-to-r from-blue-400 to-yellow-400 bg-clip-text text-transparent">Web3Nova</span>
         </motion.h1>
 
         <motion.p
@@ -287,17 +287,22 @@ const AboutPage = () => {
             </div>
           </motion.div>
 
-          <motion.div
-            className="relative group"
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1 }}
-            whileHover={{ scale: 1.05 }}
-          >
-            <div className="bg-gradient-to-br from-[#0058F0] to-[#FFD52D] rounded-3xl p-16 flex items-center justify-center shadow-[0_0_40px_#0058F0]/30 group-hover:shadow-[0_0_60px_#0058F0]/50 transition-all duration-500">
-              <div className="w-32 h-40 bg-gray-900 rounded-2xl shadow-2xl"></div>
-            </div>
-          </motion.div>
+         <motion.div
+  className="relative group"
+  initial={{ opacity: 0, x: 40 }}
+  whileInView={{ opacity: 1, x: 0 }}
+  transition={{ duration: 1 }}
+  whileHover={{ scale: 1.05 }}
+>
+  <motion.img
+    src="/web3conference.png"
+    alt=""
+    className="rounded-md"
+    transition={{ duration: 0.3 }}
+    whileHover={{ filter: 'brightness(1.2) contrast(1.1)' }}
+  />
+</motion.div>
+
         </div>
       </section>
 
@@ -305,7 +310,7 @@ const AboutPage = () => {
     <section className="py-32 px-6 relative overflow-hidden">
   <div className="max-w-7xl mx-auto text-center">
     <motion.h2
-      className="text-5xl md:text-6xl font-bold mb-20 bg-gradient-to-r from-[#0058F0] via-[#227AFF] to-[#FFD52D] bg-clip-text text-transparent"
+      className="text-5xl md:text-6xl font-bold mb-20 bg-gradient-to-r from-blue-400 to-yellow-400 bg-clip-text text-transparent"
       style={{ fontFamily: "'Space Grotesk', sans-serif" }}
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -465,7 +470,7 @@ const AboutPage = () => {
   
   <div className="max-w-6xl mx-auto text-center relative z-10">
     <motion.h2
-      className="text-5xl md:text-6xl font-bold mb-20 bg-gradient-to-r from-[#0058F0] via-[#227AFF] to-[#FFD52D] bg-clip-text text-transparent"
+      className="text-5xl md:text-6xl font-bold mb-20 bg-gradient-to-r from-blue-400 to-yellow-400 bg-clip-text text-transparent"
       style={{ fontFamily: "'Space Grotesk', sans-serif" }}
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
