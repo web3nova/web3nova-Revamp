@@ -29,7 +29,7 @@ const TestimonialsSection = () => {
       name: "Marvellous",
       role: "Blockchain developer",
       company: "Web3Nova",
-      image: "👩🏾‍💻",
+      image: "./tiwa.jpg",
       rating: 5,
       text: "Web3Nova gave me the opportunity to be part of a community of developers that help3d me upskill my career as a blockchain developer.",
       achievement: "Upskill my career as a blockchain developer.",
@@ -38,68 +38,68 @@ const TestimonialsSection = () => {
       name: "Adebanjo Abraham",
       role: "Blockchain Developer",
       company: "Web3Nova",
-      image: "👨🏿‍💻",
+      image: "./Abraham.jpg",
       rating: 5,
       text: "The curriculum is world-class. I learned Solidity, React, and smart contract security in just 12 weeks. Best investment I ever made.",
       achievement:
         "Web3nova transformed from an aspiring blockchain developer to an experienced blockchain developer, which lead me to build and co-founded a startup called paycrypt (paycrypt.org)",
     },
     {
-      name: "Amara Nwosu",
-      role: "UI/UX Designer",
-      company: "Coinbase",
-      image: "👩🏾‍🎨",
+      name: "Afolabi Emmanuel",
+      role: "Blockchain Developer",
+      company: "Web3Nova",
+      image: "Emmanuel.jpg",
       rating: 5,
-      text: "The design track exceeded all my expectations. Learning from industry experts gave me the confidence to pursue my dream role.",
-      achievement: "Promoted to Senior Designer within 1 year",
+      text: "At Web3nova, I’ve built connections, turned a month-long project into a 24‑hour sprint, learned to earn while learning, and discovered expertise isn’t reserved for “big” moments.",
+      achievement: "Turning 3weeks project into 3days project",
     },
     {
-      name: "David Adeleke",
-      role: "Full Stack Developer",
-      company: "Polygon Labs",
-      image: "👨🏿‍💼",
+      name: "Adedamola",
+      role: "Frontend Developer",
+      company: "Web3Nova",
+      image: "./Adedamola.jpg",
       rating: 5,
-      text: "From zero coding experience to shipping production code. The instructors genuinely care about your success.",
-      achievement: "Contributing to major Web3 protocols",
+      text: "My time at Web3Nova as help me in leveling up my frontend`, communication and networking skills",
+      achievement: "Improved my frontend skills and landed frontend dev jobs",
     },
   ];
 
   const clientTestimonials = [
     {
-      name: "Sarah Mitchell",
+      name: "WriterLDN",
       role: "CEO",
-      company: "DeFi Protocol X",
-      image: "👩🏼‍💼",
+      company: "WriterLDN",
+      image: "./WriterLDN.jpg",
       rating: 5,
-      text: "Web3Nova delivered beyond our expectations. They built our entire DeFi platform with exceptional quality and attention to detail.",
-      achievement: "Platform now processes $50M+ monthly",
+      text: "Web3Nova help Revamped our website and optimized our SEO, helping us in reaching a broader audience.",
+      achievement: "200+ new customers",
     },
     {
-      name: "Marcus Johnson",
+      name: "Future Edge Technologies",
       role: "Founder",
-      company: "NFT Marketplace",
-      image: "👨🏾‍💼",
+      company: "Future Edge Technologies",
+      image: "./FutureEdge.jpg",
       rating: 5,
-      text: "Working with Web3Nova was seamless. They understood our vision and brought it to life with stunning design.",
-      achievement: "10,000+ active users in first month",
+      text: "web3Nova developed an efficient cross-chain swap and trading bot.",
+      achievement: "Swift and Efficient trading",
     },
     {
-      name: "Elena Rodriguez",
-      role: "CTO",
-      company: "Web3 Gaming Studio",
-      image: "👩🏽‍💻",
+      name: "Aboki",
+      role: "Founder",
+      company: "Aboki",
+      image: "./Aboki.jpg",
       rating: 5,
-      text: "The technical depth and creative innovation Web3Nova brings is outstanding. They helped us architect a scalable infrastructure.",
-      achievement: "Raised $5M Series A after launch",
+      text: "Web3Nova built our entire platform and system from scratch to a fully functional product.",
+      achievement: "Process over $20k+ in volume.",
     },
     {
-      name: "James Chen",
-      role: "Product Lead",
-      company: "DAO Platform",
-      image: "👨🏻‍💻",
+      name: "Tonance",
+      role: "CEO",
+      company: "Tonance",
+      image: "./Tonance.jpg",
       rating: 5,
-      text: "From strategy to deployment, Web3Nova was our trusted partner. Their ability to translate complex requirements is unmatched.",
-      achievement: "Won Best DAO Platform 2024",
+      text: "Help build a mini app exchange",
+      achievement: "Sustainable system that was to accomodate 200,000+ users. ",
     },
   ];
 
@@ -326,9 +326,14 @@ const TestimonialsSection = () => {
               </span>
             </div>
             <div className="flex items-center space-x-4">
-              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#2B6EFF] to-[#71A6FF] flex items-center justify-center text-3xl shadow-lg">
+              {/* <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#2B6EFF] to-[#71A6FF] flex items-center justify-center text-3xl shadow-lg">
                 {activeTestimonials[currentIndex].image}
-              </div>
+              </div> */}
+              <img
+                src={activeTestimonials[currentIndex].image}
+                alt="pfp"
+                className="w-16 h-16 rounded-full"
+              />
               <div>
                 <h4 className="text-lg font-bold text-white mb-1 font-['Space_Grotesk']">
                   {activeTestimonials[currentIndex].name}
