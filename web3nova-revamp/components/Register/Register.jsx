@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 
 // ✅ Base URL of your Render API
-const API_BASE = "https://web3nova-backend.onrender.com/"; // 
+const API_BASE = process.env.NEXT_PUBLIC_API_URL; // 
 
 // ===================================================================
 // BackgroundEffects Component
