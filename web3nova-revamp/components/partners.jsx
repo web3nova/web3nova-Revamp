@@ -11,7 +11,7 @@ const PartnersSection = () => {
     document.head.appendChild(link);
     return () => document.head.removeChild(link);
   }, []);
-  
+
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: false, amount: 0.3 });
 
@@ -39,7 +39,7 @@ const PartnersSection = () => {
     },
     {
       icon: Award,
-      value: "50+",
+      value: "20+",
       label: "Projects Delivered",
       color: "from-[#FFC933] to-[#FFB300]",
     },
@@ -51,7 +51,7 @@ const PartnersSection = () => {
     },
     {
       icon: TrendingUp,
-      value: "$2M+",
+      value: "$100k+",
       label: "Value Created",
       color: "from-[#FFB300] to-[#FFC933]",
     },
@@ -75,7 +75,11 @@ const PartnersSection = () => {
   };
 
   return (
-    <div ref={sectionRef} className="relative bg-[#0C0C0C] py-12 md:py-16 overflow-hidden">
+    <div
+      ref={sectionRef}
+      id="partners"
+      className="relative bg-[#0C0C0C] py-12 md:py-16 overflow-hidden"
+    >
       <style>{`
         @keyframes float-slow {
           0%, 100% { transform: translate(0, 0) scale(1); }
@@ -108,75 +112,123 @@ const PartnersSection = () => {
         <div className="absolute inset-0 opacity-20">
           <div
             style={{
-              position: 'absolute',
+              position: "absolute",
               inset: 0,
-              backgroundImage: 'linear-gradient(rgba(74, 144, 226, 0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(74, 144, 226, 0.3) 1px, transparent 1px)',
-              backgroundSize: '50px 50px',
-              maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)',
-              WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)',
-              animation: 'grid-flow 20s linear infinite'
+              backgroundImage:
+                "linear-gradient(rgba(74, 144, 226, 0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(74, 144, 226, 0.3) 1px, transparent 1px)",
+              backgroundSize: "50px 50px",
+              maskImage:
+                "radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)",
+              WebkitMaskImage:
+                "radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)",
+              animation: "grid-flow 20s linear infinite",
             }}
           />
         </div>
 
         <div
           style={{
-            position: 'absolute',
-            top: '25%',
-            left: '-8rem',
-            width: '24rem',
-            height: '24rem',
-            borderRadius: '9999px',
-            filter: 'blur(80px)',
+            position: "absolute",
+            top: "25%",
+            left: "-8rem",
+            width: "24rem",
+            height: "24rem",
+            borderRadius: "9999px",
+            filter: "blur(80px)",
             opacity: 0.3,
-            background: 'radial-gradient(circle, #4A90E2, transparent)',
-            animation: 'float-slow 20s ease-in-out infinite'
+            background: "radial-gradient(circle, #4A90E2, transparent)",
+            animation: "float-slow 20s ease-in-out infinite",
           }}
         />
         <div
           style={{
-            position: 'absolute',
-            top: '50%',
+            position: "absolute",
+            top: "50%",
             right: 0,
-            width: '20rem',
-            height: '20rem',
-            borderRadius: '9999px',
-            filter: 'blur(80px)',
+            width: "20rem",
+            height: "20rem",
+            borderRadius: "9999px",
+            filter: "blur(80px)",
             opacity: 0.25,
-            background: 'radial-gradient(circle, #FDB913, transparent)',
-            animation: 'float-medium 15s ease-in-out infinite'
+            background: "radial-gradient(circle, #FDB913, transparent)",
+            animation: "float-medium 15s ease-in-out infinite",
           }}
         />
         <div
           style={{
-            position: 'absolute',
-            bottom: '25%',
-            left: '33%',
-            width: '18rem',
-            height: '18rem',
-            borderRadius: '9999px',
-            filter: 'blur(80px)',
+            position: "absolute",
+            bottom: "25%",
+            left: "33%",
+            width: "18rem",
+            height: "18rem",
+            borderRadius: "9999px",
+            filter: "blur(80px)",
             opacity: 0.2,
-            background: 'radial-gradient(circle, #4A90E2, transparent)',
-            animation: 'float-fast 12s ease-in-out infinite'
+            background: "radial-gradient(circle, #4A90E2, transparent)",
+            animation: "float-fast 12s ease-in-out infinite",
           }}
         />
 
         <div className="absolute inset-0 opacity-10">
           <div
             style={{
-              position: 'absolute',
+              position: "absolute",
               inset: 0,
-              background: 'linear-gradient(to bottom right, transparent, rgba(59, 130, 246, 0.2), transparent)',
-              animation: 'gradient-shift 20s ease-in-out infinite'
+              background:
+                "linear-gradient(to bottom right, transparent, rgba(59, 130, 246, 0.2), transparent)",
+              animation: "gradient-shift 20s ease-in-out infinite",
             }}
           />
         </div>
 
-        <div style={{ position: 'absolute', top: '25%', left: '25%', width: '0.5rem', height: '0.5rem', borderRadius: '9999px', backgroundColor: '#4A90E2', animation: 'twinkle 3s ease-in-out infinite' }} />
-        <div style={{ position: 'absolute', top: '33%', right: '33%', width: '0.5rem', height: '0.5rem', borderRadius: '9999px', backgroundColor: '#FDB913', animation: 'twinkle 3s ease-in-out infinite 1s' }} />
-        <div style={{ position: 'absolute', bottom: '33%', left: '50%', width: '0.5rem', height: '0.5rem', borderRadius: '9999px', backgroundColor: '#88B9E6', animation: 'twinkle 3s ease-in-out infinite 2s' }} />
-        <div style={{ position: 'absolute', top: '66%', right: '25%', width: '0.5rem', height: '0.5rem', borderRadius: '9999px', backgroundColor: '#4A90E2', animation: 'twinkle 3s ease-in-out infinite 1.5s' }} />
+        <div
+          style={{
+            position: "absolute",
+            top: "25%",
+            left: "25%",
+            width: "0.5rem",
+            height: "0.5rem",
+            borderRadius: "9999px",
+            backgroundColor: "#4A90E2",
+            animation: "twinkle 3s ease-in-out infinite",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            top: "33%",
+            right: "33%",
+            width: "0.5rem",
+            height: "0.5rem",
+            borderRadius: "9999px",
+            backgroundColor: "#FDB913",
+            animation: "twinkle 3s ease-in-out infinite 1s",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            bottom: "33%",
+            left: "50%",
+            width: "0.5rem",
+            height: "0.5rem",
+            borderRadius: "9999px",
+            backgroundColor: "#88B9E6",
+            animation: "twinkle 3s ease-in-out infinite 2s",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            top: "66%",
+            right: "25%",
+            width: "0.5rem",
+            height: "0.5rem",
+            borderRadius: "9999px",
+            backgroundColor: "#4A90E2",
+            animation: "twinkle 3s ease-in-out infinite 1.5s",
+          }}
+        />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
@@ -247,7 +299,7 @@ const PartnersSection = () => {
                         background: `radial-gradient(circle at center, ${partner.color}40, transparent)`,
                       }}
                     />
-                    
+
                     {/* Animated border glow */}
                     <motion.div
                       className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -259,7 +311,7 @@ const PartnersSection = () => {
                     <div className="relative z-10">
                       <p
                         className="text-lg font-bold font-['Space_Grotesk'] transition-all duration-300 group-hover:scale-110"
-                        style={{ 
+                        style={{
                           color: "#fff",
                           textShadow: `0 0 20px ${partner.color}00`,
                         }}
@@ -299,7 +351,7 @@ const PartnersSection = () => {
                         background: `radial-gradient(circle at center, ${partner.color}40, transparent)`,
                       }}
                     />
-                    
+
                     {/* Animated border glow */}
                     <motion.div
                       className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
