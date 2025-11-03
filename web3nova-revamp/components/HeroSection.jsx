@@ -1,257 +1,358 @@
-import React, { useEffect, useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, Sparkles } from "lucide-react";
+import React, { useState, useEffect } from 'react';
 
-export default function HeroSection() {
-  const heroRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
+export default function Web3NovaHomepage() {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePosition({
+        x: (e.clientX / window.innerWidth) * 100,
+        y: (e.clientY / window.innerHeight) * 100,
+      });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
 
   return (
-    <div
-      ref={heroRef}
-      className="relative min-h-screen bg-[#0C0C0C] overflow-hidden"
-    >
-      {/* Animated Background Orbs */}
-      <div className="absolute inset-0 overflow-hidden">
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            rotate: [0, 90, 0],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] rounded-full"
+    <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#0f0f1a] to-[#0a0a0a] text-white font-sans relative overflow-hidden">
+      
+      {/* Enhanced Grid Pattern with Gradient */}
+      <div 
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(46, 123, 209, 0.08) 1.5px, transparent 1.5px),
+            linear-gradient(90deg, rgba(46, 123, 209, 0.08) 1.5px, transparent 1.5px)
+          `,
+          backgroundSize: '60px 60px',
+        }}
+      ></div>
+
+      {/* Gradient Overlay for depth */}
+      <div 
+        className="absolute inset-0 z-0"
+        style={{
+          background: 'radial-gradient(circle at 50% 50%, transparent 0%, rgba(10, 10, 10, 0.6) 100%)',
+        }}
+      ></div>
+
+      {/* Animated accent lines */}
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#2E7BD1] to-transparent animate-pulse-slow"></div>
+      <div className="absolute bottom-0 right-0 w-full h-1 bg-gradient-to-r from-transparent via-[#FFB800] to-transparent animate-pulse-slow"></div>
+
+      {/* Large glossy orb - LEFT SIDE - Primary Blue */}
+      <div 
+        className="absolute -left-[15%] md:-left-[10%] top-[10%] md:top-[15%] w-[500px] md:w-[700px] h-[500px] md:h-[700px] rounded-full animate-float-1"
+        style={{
+          background: 'radial-gradient(circle at 30% 30%, rgba(46, 123, 209, 0.4), rgba(46, 123, 209, 0.25), rgba(46, 123, 209, 0.15), transparent)',
+          backdropFilter: 'blur(80px)',
+          border: '2px solid rgba(46, 123, 209, 0.25)',
+          boxShadow: '0 30px 120px rgba(46, 123, 209, 0.35), inset 0 0 100px rgba(46, 123, 209, 0.2)',
+          transform: `translate(${mousePosition.x * 0.05}px, ${mousePosition.y * 0.05}px)`,
+        }}
+      >
+        {/* Glass reflection */}
+        <div 
+          className="absolute top-[15%] left-[20%] w-[200px] md:w-[250px] h-[200px] md:h-[250px] rounded-full"
           style={{
-            background:
-              "radial-gradient(circle, rgba(43, 110, 255, 0.4) 0%, transparent 70%)",
-            filter: "blur(100px)",
+            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent)',
+            filter: 'blur(50px)',
           }}
-        />
-        <motion.div
-          animate={{
-            scale: [1, 1.3, 1],
-            rotate: [0, -90, 0],
-            opacity: [0.2, 0.4, 0.2],
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2,
-          }}
-          className="absolute bottom-[-20%] left-[-10%] w-[700px] h-[700px] rounded-full"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(255, 201, 51, 0.3) 0%, transparent 70%)",
-            filter: "blur(100px)",
-          }}
-        />
-        <motion.div
-          animate={{
-            x: [0, 100, 0],
-            y: [0, -50, 0],
-            opacity: [0.1, 0.3, 0.1],
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute top-[40%] left-[30%] w-[500px] h-[500px] rounded-full"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(113, 166, 255, 0.25) 0%, transparent 70%)",
-            filter: "blur(80px)",
-          }}
-        />
+        ></div>
       </div>
 
-      {/* Navigation */}
-      <motion.nav
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: [0.6, 0.01, 0.05, 0.9] }}
-        className="relative z-50 flex items-center justify-between px-6 md:px-12 py-6"
+      {/* Top right glossy orb - Sky Blue */}
+      <div 
+        className="absolute -right-[15%] md:right-[5%] top-[5%] md:top-[10%] w-[350px] md:w-[450px] h-[350px] md:h-[450px] rounded-full animate-float-2"
+        style={{
+          background: 'radial-gradient(circle at 35% 35%, rgba(146, 180, 228, 0.35), rgba(146, 180, 228, 0.22), rgba(146, 180, 228, 0.15), transparent)',
+          backdropFilter: 'blur(70px)',
+          border: '2px solid rgba(146, 180, 228, 0.25)',
+          boxShadow: '0 30px 130px rgba(146, 180, 228, 0.3), inset 0 0 100px rgba(146, 180, 228, 0.15)',
+          transform: `translate(${-mousePosition.x * 0.03}px, ${-mousePosition.y * 0.03}px)`,
+        }}
       >
-        <div className="flex items-center space-x-2">
-          <div className="text-2xl font-bold text-white">
-            <span className="text-[#2B6EFF]">Web3</span>Nova
-          </div>
-        </div>
-        <div className="hidden md:flex items-center space-x-8 text-sm">
-          <a
-            href="#academy"
-            className="text-gray-300 hover:text-white transition-colors"
-          >
-            Academy
-          </a>
-          <a
-            href="#services"
-            className="text-gray-300 hover:text-white transition-colors"
-          >
-            Services
-          </a>
-          <a
-            href="#events"
-            className="text-gray-300 hover:text-white transition-colors"
-          >
-            Events
-          </a>
-          <a
-            href="#about"
-            className="text-gray-300 hover:text-white transition-colors"
-          >
-            About
-          </a>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-6 py-2 rounded-full bg-gradient-to-r from-[#2B6EFF] to-[#71A6FF] text-white font-medium"
-          >
-            Contact
-          </motion.button>
-        </div>
-      </motion.nav>
-
-      {/* Hero Content */}
-      <motion.div
-        style={{ y, opacity }}
-        className="relative z-10 flex flex-col items-center justify-center text-center px-6 mt-20 md:mt-32"
-      >
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 mb-8"
-        >
-          <Sparkles className="w-4 h-4 text-[#FFC933]" />
-          <span className="text-sm text-gray-300">
-            Empowering the next generation
-          </span>
-        </motion.div>
-
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.8,
-            delay: 0.4,
-            ease: [0.6, 0.01, 0.05, 0.9],
+        {/* Glass highlight */}
+        <div 
+          className="absolute top-[10%] left-[25%] w-[150px] md:w-[180px] h-[150px] md:h-[180px] rounded-full"
+          style={{
+            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.18), transparent)',
+            filter: 'blur(40px)',
           }}
-          className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6"
-        >
-          Learn. Build. <br />
-          <span className="bg-gradient-to-r from-[#2B6EFF] via-[#71A6FF] to-[#FFC933] bg-clip-text text-transparent">
-            Earn.
-          </span>
-        </motion.h1>
+        ></div>
+      </div>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="text-lg md:text-xl text-gray-400 max-w-2xl mb-12"
+      {/* Bottom right glossy orb - Sun Yellow */}
+      <div 
+        className="absolute -right-[10%] md:right-[8%] bottom-[5%] md:bottom-[15%] w-[320px] md:w-[380px] h-[320px] md:h-[380px] rounded-full animate-float-3"
+        style={{
+          background: 'radial-gradient(circle at 30% 30%, rgba(255, 184, 0, 0.45), rgba(255, 184, 0, 0.3), rgba(255, 184, 0, 0.18), transparent)',
+          backdropFilter: 'blur(60px)',
+          border: '2px solid rgba(255, 184, 0, 0.3)',
+          boxShadow: '0 30px 120px rgba(255, 184, 0, 0.4), inset 0 0 90px rgba(255, 184, 0, 0.2)',
+          transform: `translate(${mousePosition.x * 0.04}px, ${-mousePosition.y * 0.04}px)`,
+        }}
+      >
+        {/* Glass shine */}
+        <div 
+          className="absolute top-[12%] left-[18%] w-[120px] md:w-[140px] h-[120px] md:h-[140px] rounded-full"
+          style={{
+            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.25), transparent)',
+            filter: 'blur(30px)',
+          }}
+        ></div>
+      </div>
+
+      {/* Floating particles for mobile */}
+      <div className="absolute top-[20%] left-[10%] w-2 h-2 bg-[#2E7BD1] rounded-full animate-float-particle-1 blur-sm"></div>
+      <div className="absolute top-[40%] right-[15%] w-3 h-3 bg-[#FFB800] rounded-full animate-float-particle-2 blur-sm"></div>
+      <div className="absolute bottom-[30%] left-[20%] w-2 h-2 bg-[#92B4E4] rounded-full animate-float-particle-3 blur-sm"></div>
+      <div className="absolute top-[60%] right-[25%] w-2 h-2 bg-[#2E7BD1] rounded-full animate-float-particle-1 blur-sm"></div>
+
+      {/* Hero Section */}
+      <main className="relative z-10 flex flex-col items-center justify-center px-6 md:px-8 py-16 md:py-20 max-w-5xl mx-auto text-center min-h-screen">
+        {/* Badge */}
+        <div 
+          className="mb-8 md:mb-10 inline-flex items-center gap-2 px-5 md:px-6 py-2.5 md:py-3 bg-gradient-to-r from-white/5 via-white/10 to-white/5 backdrop-blur-xl border border-[#2E7BD1]/40 rounded-full transition-all duration-300 hover:scale-105 hover:border-[#2E7BD1]/60 shadow-xl animate-glow"
+          style={{
+            boxShadow: '0 8px 32px rgba(46, 123, 209, 0.2)',
+          }}
         >
-          Empowering the next generation of Web3 builders through world-class
-          education and premium digital solutions.
-        </motion.p>
+          <span className="text-xs md:text-sm font-medium">Learn, Build and Earn<span className="font-bold mx-1 md:mx-2 text-[#FFB800]">With</span> Web3Nova</span>
+          <svg className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#FFB800]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </div>
+
+        {/* Main Heading */}
+        <h1 
+          className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 md:mb-8 leading-[1.15] tracking-tight animate-fade-in"
+          style={{ 
+            fontFamily: 'Space Grotesk, sans-serif',
+            textShadow: '0 4px 30px rgba(46, 123, 209, 0.5), 0 0 60px rgba(46, 123, 209, 0.2)'
+          }}
+        >
+          Learn, Build &<br />
+          Grow <br />
+          <span 
+            className="bg-clip-text text-transparent bg-gradient-to-r from-[#2E7BD1] via-[#92B4E4] to-[#FFB800] animate-gradient"
+            style={{
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundSize: '200% auto',
+            }}
+          >
+            with Web3Nova
+          </span>
+        </h1>
+
+        {/* Subtitle */}
+        <p className="text-base md:text-lg lg:text-xl text-white/80 mb-8 md:mb-10 max-w-2xl leading-relaxed px-4 md:px-6 py-3 md:py-4 rounded-2xl bg-gradient-to-r from-white/5 via-white/10 to-white/5 backdrop-blur-md border border-white/15 shadow-2xl animate-fade-in-up">
+        Web3Nova is your launchpad into the world of Web3. Whether you&apos;re looking to start a career in blockchain development through our 16-week hands-on bootcamp, or seeking expert-led design and development services for your Web3 project.
+        </p>
+
+      
 
         {/* CTA Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="flex flex-col sm:flex-row gap-4"
-        >
-          <motion.button
-            whileHover={{
-              scale: 1.05,
-              boxShadow: "0 0 30px rgba(43, 110, 255, 0.5)",
+        <div className="flex flex-col sm:flex-row gap-3 md:gap-4 w-full sm:w-auto px-4 sm:px-0">
+          <a 
+            href="https://docs.google.com/forms/d/1Is6m8-p8jPW7mgbdWuyI0P2TBIb_s0RNk0tgV3UuX6U"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative px-6 md:px-8 py-3.5 md:py-4 bg-gradient-to-r from-[#2E7BD1] via-[#3a8de8] to-[#92B4E4] text-white font-semibold rounded-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-105 animate-fade-in-up inline-block text-center"
+            style={{
+              boxShadow: '0 12px 50px rgba(46, 123, 209, 0.5)',
             }}
-            whileTap={{ scale: 0.95 }}
-            className="group relative px-8 py-4 rounded-full bg-gradient-to-r from-[#2B6EFF] to-[#71A6FF] text-white font-semibold overflow-hidden"
           >
-            <span className="relative z-10 flex items-center justify-center">
-              Join the Academy
-              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </span>
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-[#71A6FF] to-[#2B6EFF]"
-              initial={{ x: "100%" }}
-              whileHover={{ x: 0 }}
-              transition={{ duration: 0.3 }}
-            />
-          </motion.button>
-
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="group px-8 py-4 rounded-full bg-white/5 backdrop-blur-sm border-2 border-white/20 text-white font-semibold hover:border-[#FFC933] transition-all"
+            <span className="relative z-10 text-sm md:text-base">Join Next Cohort</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-[#1a5a9f] via-[#2E7BD1] to-[#1a5a9f] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="absolute inset-0 bg-white/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </a>
+          
+          <button 
+            className="group relative px-6 md:px-8 py-3.5 md:py-4 bg-gradient-to-r from-[#FFB800]/10 via-[#FFB800]/15 to-[#FFB800]/10 backdrop-blur-xl border-2 border-[#FFB800]/40 text-[#FFB800] font-semibold rounded-xl hover:bg-[#FFB800]/20 hover:border-[#FFB800]/60 transition-all duration-300 hover:scale-105 animate-fade-in-up"
+            style={{
+              boxShadow: '0 8px 32px rgba(255, 184, 0, 0.2)',
+            }}
           >
-            <span className="flex items-center justify-center">
-              Explore Our Services
-              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </span>
-          </motion.button>
-        </motion.div>
+            <span className="relative z-10 text-sm md:text-base">Explore Services</span>
+            <div className="absolute inset-0 bg-[#FFB800]/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </button>
+        </div>
+      </main>
 
-        {/* Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1 }}
-          className="grid grid-cols-3 gap-8 md:gap-16 mt-20 md:mt-32"
-        >
-          {[
-            { value: "500+", label: "Students Trained" },
-            { value: "50+", label: "Projects Delivered" },
-            { value: "20+", label: "Partner Companies" },
-          ].map((stat, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 1.2 + index * 0.1 }}
-              className="text-center"
-            >
-              <div className="text-3xl md:text-4xl font-bold text-white mb-2">
-                {stat.value}
-              </div>
-              <div className="text-sm text-gray-400">{stat.label}</div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </motion.div>
+      {/* Custom animations */}
+      <style jsx global>{`
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+        
+        * {
+          font-family: 'Space Grotesk', sans-serif;
+        }
 
-      {/* Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.5 }}
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20"
-      >
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="w-6 h-10 border-2 border-white/30 rounded-full flex items-start justify-center p-2"
-        >
-          <motion.div
-            animate={{ y: [0, 12, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="w-1 h-2 bg-white rounded-full"
-          />
-        </motion.div>
-      </motion.div>
+        @keyframes float-1 {
+          0%, 100% { 
+            transform: translate(0, 0) scale(1);
+          }
+          33% { 
+            transform: translate(30px, -40px) scale(1.05);
+          }
+          66% { 
+            transform: translate(-20px, -20px) scale(0.98);
+          }
+        }
+
+        @keyframes float-2 {
+          0%, 100% { 
+            transform: translate(0, 0) scale(1);
+          }
+          33% { 
+            transform: translate(-40px, 30px) scale(1.03);
+          }
+          66% { 
+            transform: translate(20px, -30px) scale(0.97);
+          }
+        }
+
+        @keyframes float-3 {
+          0%, 100% { 
+            transform: translate(0, 0) scale(1) rotate(0deg);
+          }
+          50% { 
+            transform: translate(-30px, -40px) scale(1.08) rotate(5deg);
+          }
+        }
+
+        @keyframes float-particle-1 {
+          0%, 100% { 
+            transform: translateY(0px) translateX(0px);
+            opacity: 0.3;
+          }
+          50% { 
+            transform: translateY(-30px) translateX(20px);
+            opacity: 0.8;
+          }
+        }
+
+        @keyframes float-particle-2 {
+          0%, 100% { 
+            transform: translateY(0px) translateX(0px);
+            opacity: 0.4;
+          }
+          50% { 
+            transform: translateY(-40px) translateX(-20px);
+            opacity: 0.9;
+          }
+        }
+
+        @keyframes float-particle-3 {
+          0%, 100% { 
+            transform: translateY(0px) translateX(0px);
+            opacity: 0.3;
+          }
+          50% { 
+            transform: translateY(30px) translateX(-15px);
+            opacity: 0.7;
+          }
+        }
+
+        @keyframes glow {
+          0%, 100% {
+            box-shadow: 0 8px 32px rgba(46, 123, 209, 0.2);
+          }
+          50% {
+            box-shadow: 0 8px 40px rgba(46, 123, 209, 0.4);
+          }
+        }
+
+        @keyframes gradient {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+
+        @keyframes fade-in {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes fade-in-up {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes pulse-slow {
+          0%, 100% {
+            opacity: 0.3;
+          }
+          50% {
+            opacity: 0.6;
+          }
+        }
+
+        .animate-float-1 {
+          animation: float-1 20s ease-in-out infinite;
+        }
+
+        .animate-float-2 {
+          animation: float-2 18s ease-in-out infinite;
+        }
+
+        .animate-float-3 {
+          animation: float-3 22s ease-in-out infinite;
+        }
+
+        .animate-float-particle-1 {
+          animation: float-particle-1 8s ease-in-out infinite;
+        }
+
+        .animate-float-particle-2 {
+          animation: float-particle-2 10s ease-in-out infinite;
+        }
+
+        .animate-float-particle-3 {
+          animation: float-particle-3 12s ease-in-out infinite;
+        }
+
+        .animate-glow {
+          animation: glow 3s ease-in-out infinite;
+        }
+
+        .animate-gradient {
+          animation: gradient 5s ease infinite;
+        }
+
+        .animate-fade-in {
+          animation: fade-in 0.8s ease-out forwards;
+        }
+
+        .animate-fade-in-up {
+          animation: fade-in-up 0.8s ease-out forwards;
+        }
+
+        .animate-pulse-slow {
+          animation: pulse-slow 4s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   );
 }
