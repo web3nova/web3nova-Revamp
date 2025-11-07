@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Users, TrendingUp, Sparkles, ExternalLink } from "lucide-react";
+import { Users, TrendingUp, Sparkles, ExternalLink, Clock, Zap, Award } from "lucide-react";
 
 function BackgroundEffects() {
   return (
@@ -42,10 +42,15 @@ function BackgroundEffects() {
           0% { transform: translate(0, 0); }
           100% { transform: translate(50px, 50px); }
         }
+        @keyframes pulse-glow {
+          0%, 100% { opacity: 0.5; }
+          50% { opacity: 1; }
+        }
         .animate-float-slow { animation: float-slow 20s ease-in-out infinite; }
         .animate-float-medium { animation: float-medium 15s ease-in-out infinite; }
         .animate-float-fast { animation: float-fast 12s ease-in-out infinite; }
         .animate-grid-flow { animation: grid-flow 20s linear infinite; }
+        .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
       `}</style>
     </>
   );
@@ -55,20 +60,36 @@ export default function HiringSection() {
   const roles = [
     {
       id: "social-media",
-      title: "Social Media Managers",
+      title: "Social Media Manager",
       icon: <Users className="w-6 h-6" />,
       color: "#4A90E2",
-      description: "Build and manage strong online presence across platforms",
-      skills: ["Content Creation", "Community Management", "Analytics", "Brand Building"],
+      description: "Build and manage our brand's online presence across multiple platforms. Create engaging content and grow our community.",
+      skills: ["Content Creation", "Community Management", "Analytics", "Brand Strategy"],
+      responsibilities: [
+        "Develop and execute social media strategies",
+        "Create engaging content across platforms",
+        "Monitor and respond to community engagement",
+      ]
     },
     {
       id: "growth",
-      title: "Growth Managers",
+      title: "Growth Manager",
       icon: <TrendingUp className="w-6 h-6" />,
       color: "#FDB913",
-      description: "Drive strategy, user acquisition, and product expansion",
-      skills: ["Growth Strategy", "Data Analysis", "User Acquisition", "Product Marketing"],
+      description: "Drive user acquisition, retention, and product expansion. Analyze data and implement growth strategies.",
+      skills: ["Growth Strategy", "Data Analysis", "User Acquisition", "A/B Testing"],
+      responsibilities: [
+        "Design and implement growth experiments",
+        "Analyze metrics and optimize funnels",
+        "Drive user acquisition and retention",
+      ]
     },
+  ];
+
+  const benefits = [
+    { icon: <Award className="w-5 h-5" />, text: "Competitive Compensation" },
+    { icon: <Clock className="w-5 h-5" />, text: "Flexible Schedule" },
+    { icon: <Zap className="w-5 h-5" />, text: "Real-World Experience" },
   ];
 
   return (
@@ -87,58 +108,85 @@ export default function HiringSection() {
             <motion.div 
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mb-16 text-center"
+              className="mb-12 text-center"
             >
-              <motion.div
-                initial={{ scale: 0.9 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 0.5 }}
-                className="inline-block px-8 py-3 rounded-full mb-6 bg-gradient-to-r from-red-500/10 to-yellow-400/10 border border-red-500/30"
-              >
-                <span className="font-bold text-lg bg-gradient-to-r from-red-400 via-yellow-400 to-red-500 bg-clip-text text-transparent uppercase tracking-wider">
-                  🚨 We're Hiring! 🚨
-                </span>
-              </motion.div>
+
               
               <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-blue-300 to-yellow-400 bg-clip-text text-transparent">
                 Join Our Team
               </h1>
               
-              <p className="text-gray-300 text-xl max-w-3xl mx-auto leading-relaxed mb-4">
-                Are you passionate about creativity, digital engagement, and growth?
+              <p className="text-gray-300 text-xl max-w-3xl mx-auto leading-relaxed mb-2">
+                Launch your career in tech and Web3 with hands-on experience
               </p>
               
-              <p className="text-gray-400 text-lg max-w-3xl mx-auto">
-                We're on the lookout for talented individuals to join our team in building exciting things in the tech and Web3 space.
+              <p className="text-gray-400 text-lg max-w-3xl mx-auto mb-8">
+                Seeking passionate individuals ready to make an impact in digital innovation
               </p>
             </motion.div>
 
+            {/* Benefits Bar */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="flex flex-wrap justify-center gap-6 mb-12"
+            >
+              {benefits.map((benefit, index) => (
+                <div
+                  key={index}
+                  className="flex items-center gap-2 px-5 py-3 rounded-full backdrop-blur-xl bg-white/5 border border-white/10"
+                >
+                  <div className="text-blue-400">{benefit.icon}</div>
+                  <span className="text-gray-300 text-sm font-medium">{benefit.text}</span>
+                </div>
+              ))}
+            </motion.div>
+
             {/* Role Cards */}
-            <div className="grid md:grid-cols-2 gap-6 mb-16 max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-6 mb-12 max-w-5xl mx-auto">
               {roles.map((role, index) => (
                 <motion.div
                   key={role.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.2 }}
+                  transition={{ delay: 0.4 + index * 0.2 }}
                   className="group relative backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-8 hover:border-white/20 hover:bg-white/10 transition-all duration-300"
                 >
-                  <div 
-                    className="flex-shrink-0 w-16 h-16 rounded-2xl flex items-center justify-center text-black mb-6 group-hover:scale-110 transition-transform duration-300"
-                    style={{ backgroundColor: role.color }}
-                  >
-                    {role.icon}
+                  <div className="flex items-start gap-4 mb-6">
+                    <div 
+                      className="flex-shrink-0 w-16 h-16 rounded-2xl flex items-center justify-center text-black group-hover:scale-110 transition-transform duration-300"
+                      style={{ backgroundColor: role.color }}
+                    >
+                      {role.icon}
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-bold text-2xl text-white mb-2 group-hover:text-blue-300 transition-colors">
+                        {role.title}
+                      </h3>
+                      <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-green-500/20 border border-green-500/30">
+                        <span className="text-green-400 text-xs font-semibold">PAID INTERNSHIP</span>
+                      </div>
+                    </div>
                   </div>
-
-                  <h3 className="font-bold text-2xl text-white mb-3 group-hover:text-blue-300 transition-colors">
-                    {role.title}
-                  </h3>
 
                   <p className="text-gray-400 text-base leading-relaxed mb-6">
                     {role.description}
                   </p>
 
-                  <div className="flex flex-wrap gap-2">
+                  <div className="mb-6">
+                    <p className="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-3">Key Responsibilities</p>
+                    <ul className="space-y-2">
+                      {role.responsibilities.map((resp, i) => (
+                        <li key={i} className="text-gray-400 text-sm flex items-start gap-2">
+                          <span className="text-blue-400 mt-1">•</span>
+                          <span>{resp}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2 mb-6">
                     {role.skills.map((skill, i) => (
                       <span
                         key={i}
@@ -153,6 +201,29 @@ export default function HiringSection() {
                     ))}
                   </div>
 
+                  {/* Apply Button */}
+                  <div className="pt-4 border-t border-white/10">
+                    <a
+                      href="https://bit.ly/47Zag3N"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="relative group/btn w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-base text-black hover:scale-105 shadow-lg transition-all duration-300"
+                      style={{ 
+                        background: `linear-gradient(to right, ${role.color}, ${role.color}dd)` 
+                      }}
+                    >
+                      Apply Now
+                      <ExternalLink className="w-5 h-5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform duration-300" />
+                      
+                      <div 
+                        className="absolute -inset-0.5 rounded-xl opacity-50 blur-md -z-10 group-hover/btn:opacity-75 transition-opacity duration-300"
+                        style={{ 
+                          background: `linear-gradient(to right, ${role.color}, ${role.color}dd)` 
+                        }}
+                      />
+                    </a>
+                  </div>
+
                   <div 
                     className="absolute -inset-0.5 rounded-3xl opacity-0 group-hover:opacity-50 blur-lg -z-10 transition-opacity duration-300"
                     style={{ background: `radial-gradient(circle, ${role.color}, transparent)` }}
@@ -161,42 +232,20 @@ export default function HiringSection() {
               ))}
             </div>
 
-            {/* Call to Action */}
+            {/* Footer Info */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
+              transition={{ delay: 0.8 }}
               className="text-center"
             >
-              <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-8 max-w-3xl mx-auto mb-8">
-                <div className="flex items-center justify-center gap-2 mb-4">
-                  <Sparkles className="w-6 h-6 text-yellow-400" />
-                  <h2 className="text-2xl font-bold text-white">
-                    Ready to Make an Impact?
-                  </h2>
-                  <Sparkles className="w-6 h-6 text-yellow-400" />
-                </div>
-                
-                <p className="text-gray-300 text-lg mb-6">
-                  Whether you're a rising talent or experienced in your field, we'd love to have you onboard!
-                </p>
-
-                <a
-                  href="https://bit.ly/47Zag3N"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="relative group inline-flex items-center gap-3 px-12 py-5 rounded-full font-bold text-xl bg-gradient-to-r from-blue-400 to-yellow-400 text-black hover:scale-105 shadow-2xl transition-all duration-300"
-                >
-                  Apply Now
-                  <ExternalLink className="w-6 h-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
-                  
-                  <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-blue-400 to-yellow-400 opacity-50 blur-xl -z-10 group-hover:opacity-75 transition-opacity duration-300" />
-                </a>
+              <div className="flex items-center justify-center gap-6 text-gray-500 text-sm">
+                <span>🌍 Remote-friendly</span>
+                <span>•</span>
+                <span>📈 Growth opportunities</span>
+                <span>•</span>
+                <span>🤝 Collaborative culture</span>
               </div>
-
-              <p className="text-gray-500 text-sm">
-                Applications are reviewed on a rolling basis
-              </p>
             </motion.div>
           </div>
         </div>
