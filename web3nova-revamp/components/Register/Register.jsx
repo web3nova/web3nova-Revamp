@@ -2,7 +2,13 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Code, Server, Palette, Rocket, Sparkles, ChevronDown, ChevronUp, Check, ArrowRight, ArrowLeft, User, Mail, Phone, MapPin, Github, Wallet } from "lucide-react";
+import { 
+  Code, Server, Palette, Rocket, Sparkles, ChevronDown, ChevronUp, 
+  Check, ArrowRight, ArrowLeft, User, Mail, Phone, MapPin, Github, Wallet 
+} from "lucide-react";
+
+// ✅ Base URL of your Render API
+const API_BASE = process.env.NEXT_PUBLIC_API_URL; // 
 
 // ===================================================================
 // BackgroundEffects Component
@@ -62,8 +68,9 @@ function BackgroundEffects() {
 // ===================================================================
 function Step1({ onNext, formData, setFormData }) {
   const [expanded, setExpanded] = useState({});
+  const [loading, setLoading] = useState(false);
 
-  const courses = [
+   const courses = [
     {
       id: "rust",
       title: "Rust Blockchain Protocol Development",
@@ -111,11 +118,42 @@ function Step1({ onNext, formData, setFormData }) {
     },
   ];
 
+
   const toggleExpand = (id) => setExpanded((p) => ({ ...p, [id]: !p[id] }));
+
+  // ✅ New: Create draft application
+  const handleNext = async () => {
+    if (!formData.course) return;
+    setLoading(true);
+
+    try {
+      const res = await fetch(`${API_BASE}/applications`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ track: formData.course }),
+      });
+
+      if (!res.ok) throw new Error("Failed to create application");
+      const data = await res.json();
+
+      // Save returned ID and token
+      setFormData({
+        ...formData,
+        appId: data.id,
+        appToken: data["x-app-token"],
+      });
+
+      onNext();
+    } catch (err) {
+      alert("Error creating application: " + err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="w-full max-w-4xl">
-      <motion.div 
+       <motion.div 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         className="mb-12 text-center"
@@ -249,16 +287,16 @@ function Step1({ onNext, formData, setFormData }) {
 
       <div className="flex justify-center">
         <button
-          onClick={onNext}
-          disabled={!formData.course}
+          onClick={handleNext}
+          disabled={!formData.course || loading}
           className={`relative group inline-flex items-center gap-3 px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 ${
-            formData.course
+            formData.course && !loading
               ? "bg-gradient-to-r from-blue-400 to-yellow-400 text-black hover:scale-105 shadow-2xl cursor-pointer"
               : "bg-gray-800 text-gray-500 cursor-not-allowed"
           }`}
         >
-          Continue to Next Step
-          <ArrowRight className="w-5 h-5" />
+          {loading ? "Connecting..." : "Continue to Next Step"}
+          {!loading && <ArrowRight className="w-5 h-5" />}
         </button>
       </div>
     </div>
@@ -269,7 +307,9 @@ function Step1({ onNext, formData, setFormData }) {
 // Step 2: Personal Information
 // ===================================================================
 function Step2({ onNext, onBack, formData, setFormData }) {
-  const isValid =
+  const [loading, setLoading] = useState(false);
+
+   const isValid =
     formData.fullName.trim() &&
     formData.email.trim() &&
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) &&
@@ -278,13 +318,48 @@ function Step2({ onNext, onBack, formData, setFormData }) {
     formData.state.trim() &&
     formData.city.trim() &&
     formData.gender;
+  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const handleChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  // ✅ New: Save personal info to API
+  const handleNext = async () => {
+    if (!isValid) return;
+    setLoading(true);
+
+    try {
+      const res = await fetch(
+        `${API_BASE}/applications/${formData.appId}/personal`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            "x-app-token": formData.appToken,
+          },
+          body: JSON.stringify({
+            fullName: formData.fullName,
+            email: formData.email,
+            phone: formData.phone,
+            venue: formData.venue,
+            github: formData.github,
+            country: formData.country,
+            state: formData.state,
+            city: formData.city,
+            gender: formData.gender,
+          }),
+        }
+      );
+
+      if (!res.ok) throw new Error("Failed to save personal info");
+      onNext();
+    } catch (err) {
+      alert("Error saving personal info: " + err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="w-full max-w-3xl">
-      <motion.div
+       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         className="mb-12 text-center"
@@ -449,27 +524,23 @@ function Step2({ onNext, onBack, formData, setFormData }) {
           </div>
         </div>
       </div>
-
       <div className="flex justify-between items-center">
-        <button
-          onClick={onBack}
-          className="group inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold border border-white/20 hover:bg-white/5 transition-all duration-300"
-        >
+        <button onClick={onBack} className="group inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold border border-white/20 hover:bg-white/5 transition-all duration-300">
           <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-300" />
           Previous
         </button>
 
         <button
-          onClick={onNext}
-          disabled={!isValid}
+          onClick={handleNext}
+          disabled={!isValid || loading}
           className={`relative group inline-flex items-center gap-3 px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 ${
-            isValid
+            isValid && !loading
               ? "bg-gradient-to-r from-blue-400 to-yellow-400 text-black hover:scale-105 shadow-2xl cursor-pointer"
               : "bg-gray-800 text-gray-500 cursor-not-allowed"
           }`}
         >
-          Continue
-          <ArrowRight className="w-5 h-5" />
+          {loading ? "Saving..." : "Continue"}
+          {!loading && <ArrowRight className="w-5 h-5" />}
         </button>
       </div>
     </div>
@@ -480,21 +551,45 @@ function Step2({ onNext, onBack, formData, setFormData }) {
 // Step 3: Final Details
 // ===================================================================
 function Step3({ onBack, formData, setFormData }) {
-  const isValid =
-    formData.inspiration.trim().length > 10 &&
-    /^0x[a-fA-F0-9]{40}$/.test(formData.wallet);
+  const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const isValid = formData.inspiration.trim().length > 10 && /^0x[a-fA-F0-9]{40}$/.test(formData.wallet);
+  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const handleSubmit = () => {
+  // ✅ New: Finalize application
+  const handleSubmit = async () => {
     if (!isValid) return;
-    alert("Registration Complete! (In production, this would redirect to payment)");
+    setLoading(true);
+
+    try {
+      const res = await fetch(
+        `${API_BASE}/applications/${formData.appId}/final`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            "x-app-token": formData.appToken,
+          },
+          body: JSON.stringify({
+            duration: "3 months",
+            motivation: formData.inspiration,
+            walletAddress: formData.wallet,
+          }),
+        }
+      );
+
+      if (!res.ok) throw new Error("Failed to finalize registration");
+      alert("✅ Registration complete!");
+    } catch (err) {
+      alert("Error completing registration: " + err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="w-full max-w-3xl">
-      <motion.div
+     <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         className="mb-12 text-center"
@@ -576,30 +671,26 @@ function Step3({ onBack, formData, setFormData }) {
       </div>
 
       <div className="flex justify-between items-center">
-        <button
-          onClick={onBack}
-          className="group inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold border border-white/20 hover:bg-white/5 transition-all duration-300"
-        >
+        <button onClick={onBack} className="group inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold border border-white/20 hover:bg-white/5 transition-all duration-300">
           <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-300" />
           Previous
         </button>
 
         <button
           onClick={handleSubmit}
-          disabled={!isValid}
+          disabled={!isValid || loading}
           className={`relative group inline-flex items-center gap-3 px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 ${
-            isValid
+            isValid && !loading
               ? "bg-gradient-to-r from-blue-400 to-yellow-400 text-black hover:scale-105 shadow-2xl cursor-pointer"
               : "bg-gray-800 text-gray-500 cursor-not-allowed"
           }`}
         >
-          {isValid && (
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-full" />
+          {loading ? "Submitting..." : (
+            <>
+              <Sparkles className="w-5 h-5" />
+              Complete Registration
+            </>
           )}
-          <span className="relative z-10 flex items-center gap-2">
-            <Sparkles className="w-5 h-5" />
-            Complete Registration
-          </span>
         </button>
       </div>
     </div>
@@ -607,7 +698,7 @@ function Step3({ onBack, formData, setFormData }) {
 }
 
 // ===================================================================
-// Main Registration Component
+// Main Registration Component (unchanged visuals)
 // ===================================================================
 export default function Registration() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -624,6 +715,8 @@ export default function Registration() {
     gender: "",
     inspiration: "",
     wallet: "",
+    appId: "",
+    appToken: "",
   });
 
   const totalSteps = 3;
@@ -633,24 +726,25 @@ export default function Registration() {
     <>
       <style jsx global>{`
         @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap");
-        body {
-          font-family: "Space Grotesk", sans-serif;
-        }
+        body { font-family: "Space Grotesk", sans-serif; }
       `}</style>
 
       <main className="min-h-screen bg-black text-white relative overflow-hidden">
         <BackgroundEffects />
-        
         <div className="relative z-10 flex items-center justify-center min-h-screen p-6 py-20">
           <div className="w-full max-w-6xl">
-            {/* Progress Bar */}
+            {/* Progress Bar (unchanged) */}
             <div className="mb-12 max-w-4xl mx-auto">
               <div className="flex items-center justify-between mb-3">
-                <span className="text-sm text-gray-400">Step {currentStep} of {totalSteps}</span>
-                <span className="text-sm text-gray-400">{Math.round(progress)}% Complete</span>
+                <span className="text-sm text-gray-400">
+                  Step {currentStep} of {totalSteps}
+                </span>
+                <span className="text-sm text-gray-400">
+                  {Math.round(progress)}% Complete
+                </span>
               </div>
               <div className="h-3 bg-white/10 rounded-full overflow-hidden">
-                <motion.div 
+                <motion.div
                   className="h-full bg-gradient-to-r from-blue-400 to-yellow-400 rounded-full"
                   initial={{ width: 0 }}
                   animate={{ width: `${progress}%` }}
@@ -662,54 +756,20 @@ export default function Registration() {
             {/* Step Content */}
             <AnimatePresence mode="wait">
               {currentStep === 1 && (
-                <motion.div
-                  key="step1"
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -50 }}
-                  transition={{ duration: 0.3 }}
-                  className="flex justify-center"
-                >
-                  <Step1
-                    onNext={() => setCurrentStep(2)}
-                    formData={formData}
-                    setFormData={setFormData}
-                  />
+                <motion.div key="step1" initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -50 }} transition={{ duration: 0.3 }} className="flex justify-center">
+                  <Step1 onNext={() => setCurrentStep(2)} formData={formData} setFormData={setFormData} />
                 </motion.div>
               )}
 
               {currentStep === 2 && (
-                <motion.div
-                  key="step2"
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -50 }}
-                  transition={{ duration: 0.3 }}
-                  className="flex justify-center"
-                >
-                  <Step2
-                    onNext={() => setCurrentStep(3)}
-                    onBack={() => setCurrentStep(1)}
-                    formData={formData}
-                    setFormData={setFormData}
-                  />
+                <motion.div key="step2" initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -50 }} transition={{ duration: 0.3 }} className="flex justify-center">
+                  <Step2 onNext={() => setCurrentStep(3)} onBack={() => setCurrentStep(1)} formData={formData} setFormData={setFormData} />
                 </motion.div>
               )}
 
               {currentStep === 3 && (
-                <motion.div
-                  key="step3"
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -50 }}
-                  transition={{ duration: 0.3 }}
-                  className="flex justify-center"
-                >
-                  <Step3
-                    onBack={() => setCurrentStep(2)}
-                    formData={formData}
-                    setFormData={setFormData}
-                  />
+                <motion.div key="step3" initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -50 }} transition={{ duration: 0.3 }} className="flex justify-center">
+                  <Step3 onBack={() => setCurrentStep(2)} formData={formData} setFormData={setFormData} />
                 </motion.div>
               )}
             </AnimatePresence>
