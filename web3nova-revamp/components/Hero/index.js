@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 
 export default function Web3NovaHomepage() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [bubbles, setBubbles] = useState([]);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -13,6 +15,28 @@ export default function Web3NovaHomepage() {
 
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  // Generate bubbles continuously
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const newBubble = {
+        id: Date.now() + Math.random(),
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        size: Math.random() * 30 + 10,
+        duration: Math.random() * 3 + 2,
+      };
+      
+      setBubbles(prev => [...prev, newBubble]);
+      
+      // Remove bubble after animation
+      setTimeout(() => {
+        setBubbles(prev => prev.filter(b => b.id !== newBubble.id));
+      }, (newBubble.duration + 1) * 1000);
+    }, 300);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -41,6 +65,34 @@ export default function Web3NovaHomepage() {
       {/* Animated accent lines */}
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#2E7BD1] to-transparent animate-pulse-slow"></div>
       <div className="absolute bottom-0 right-0 w-full h-1 bg-gradient-to-r from-transparent via-[#FFB800] to-transparent animate-pulse-slow"></div>
+
+      {/* Bubbles */}
+      {bubbles.map(bubble => (
+        <div
+          key={bubble.id}
+          className="absolute rounded-full pointer-events-none animate-bubble-float"
+          style={{
+            left: `${bubble.x}%`,
+            top: `${bubble.y}%`,
+            width: `${bubble.size}px`,
+            height: `${bubble.size}px`,
+            background: `radial-gradient(circle at 30% 30%, rgba(46, 123, 209, 0.3), rgba(146, 180, 228, 0.2), transparent)`,
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            boxShadow: '0 8px 32px rgba(46, 123, 209, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.1)',
+            animation: `bubble-float ${bubble.duration}s ease-out forwards`,
+            zIndex: 5,
+          }}
+        >
+          {/* Bubble highlight */}
+          <div
+            className="absolute top-[20%] left-[30%] w-[40%] h-[40%] rounded-full"
+            style={{
+              background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6), transparent)',
+              filter: 'blur(5px)',
+            }}
+          ></div>
+        </div>
+      ))}
 
       {/* Large glossy orb - LEFT SIDE - Primary Blue */}
       <div
@@ -188,18 +240,24 @@ export default function Web3NovaHomepage() {
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-3 md:gap-4 w-full sm:w-auto px-4 sm:px-0">
-          <button 
-            className="group relative px-6 md:px-8 py-3.5 md:py-4 bg-gradient-to-r from-[#2E7BD1] via-[#3a8de8] to-[#92B4E4] text-white font-semibold rounded-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-105 animate-fade-in-up"
+          <Link
+            href="https://docs.google.com/forms/d/1Is6m8-p8jPW7mgbdWuyI0P2TBIb_s0RNk0tgV3UuX6U"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative px-6 md:px-8 py-3.5 md:py-4 bg-gradient-to-r from-[#2E7BD1] via-[#3a8de8] to-[#92B4E4] text-white font-semibold rounded-xl overflow-visible transition-all duration-300 hover:shadow-2xl animate-fade-in-up animate-vibrate-attention inline-block text-center"
             style={{
               boxShadow: "0 12px 50px rgba(46, 123, 209, 0.5)",
             }}
           >
+            {/* Pulsing ring effect */}
+            <div className="absolute inset-0 rounded-xl animate-pulse-ring"></div>
+            
             <span className="relative z-10 text-sm md:text-base">
               Join Next Cohort
             </span>
-            <div className="absolute inset-0 bg-gradient-to-r from-[#1a5a9f] via-[#2E7BD1] to-[#1a5a9f] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div className="absolute inset-0 bg-white/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          </button>
+            <div className="absolute inset-0 bg-gradient-to-r from-[#1a5a9f] via-[#2E7BD1] to-[#1a5a9f] opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
+            <div className="absolute inset-0 bg-white/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
+          </Link>
           
           <button 
             className="group relative px-6 md:px-8 py-3.5 md:py-4 bg-gradient-to-r from-[#FFB800]/10 via-[#FFB800]/15 to-[#FFB800]/10 backdrop-blur-xl border-2 border-[#FFB800]/40 text-[#FFB800] font-semibold rounded-xl hover:bg-[#FFB800]/20 hover:border-[#FFB800]/60 transition-all duration-300 hover:scale-105 animate-fade-in-up"
@@ -295,6 +353,60 @@ export default function Web3NovaHomepage() {
           }
         }
 
+        @keyframes bubble-float {
+          0% {
+            transform: translateY(0) scale(0);
+            opacity: 0;
+          }
+          10% {
+            opacity: 0.8;
+          }
+          50% {
+            transform: translateY(-100px) scale(1);
+            opacity: 0.6;
+          }
+          100% {
+            transform: translateY(-200px) scale(0.5);
+            opacity: 0;
+          }
+        }
+
+        @keyframes vibrate-attention {
+          0%, 100% {
+            transform: translate(0, 0) scale(1);
+          }
+          2% {
+            transform: translate(-2px, 0) scale(1.02);
+          }
+          4% {
+            transform: translate(2px, 0) scale(1.02);
+          }
+          6% {
+            transform: translate(-2px, 0) scale(1.02);
+          }
+          8% {
+            transform: translate(2px, 0) scale(1.02);
+          }
+          10% {
+            transform: translate(0, 0) scale(1);
+          }
+        }
+
+        @keyframes pulse-ring {
+          0% {
+            box-shadow: 0 0 0 0 rgba(46, 123, 209, 0.7);
+            transform: scale(1);
+          }
+          50% {
+            box-shadow: 0 0 0 10px rgba(46, 123, 209, 0);
+            transform: scale(1.05);
+          }
+          100% {
+            box-shadow: 0 0 0 0 rgba(46, 123, 209, 0);
+            transform: scale(1);
+          }
+        }
+
         @keyframes glow {
           0%,
           100% {
@@ -371,6 +483,18 @@ export default function Web3NovaHomepage() {
 
         .animate-float-particle-3 {
           animation: float-particle-3 12s ease-in-out infinite;
+        }
+
+        .animate-bubble-float {
+          animation: bubble-float 3s ease-out forwards;
+        }
+
+        .animate-vibrate-attention {
+          animation: vibrate-attention 3s ease-in-out infinite;
+        }
+
+        .animate-pulse-ring {
+          animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
         }
 
         .animate-glow {
