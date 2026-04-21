@@ -68,6 +68,7 @@ export default function Navigation() {
     { name: "Home", href: "/" },
     { name: "Training", href: "/#training" },
     { name: "Services", href: "/services" },
+    { name: "Internship", href: "/internship" },
     { name: "Events", href: "/events" },
     { name: "About Us", href: "/about" },
     { name: "Contact Us", href: "/#bookacall" },
