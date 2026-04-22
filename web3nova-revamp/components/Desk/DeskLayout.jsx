@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { Users, UserCheck, Clock, LogOut } from "lucide-react";
-import { getToken, clearToken } from "@/lib/deskApi";
+import { Users, UserCheck, Clock, LogOut, Wifi, RefreshCw } from "lucide-react";
+import { getToken, clearToken, deskFetch } from "@/lib/deskApi";
 
 const NAV = [
   { href: "/desk/applicants", label: "Applicants", icon: Users },
@@ -13,14 +13,32 @@ const NAV = [
 export default function DeskLayout({ children, title }) {
   const router = useRouter();
   const [ready, setReady] = useState(false);
+  const [hub, setHub] = useState(null);
+  const [syncing, setSyncing] = useState(false);
+  const [syncMsg, setSyncMsg] = useState(null);
 
   useEffect(() => {
     if (!getToken()) {
       router.replace("/desk/login");
     } else {
       setReady(true);
+      deskFetch("/hub/ip").then(setHub).catch(() => {});
     }
   }, [router]);
+
+  async function syncHubIp() {
+    setSyncing(true);
+    setSyncMsg(null);
+    try {
+      const data = await deskFetch("/hub/sync-ip", { method: "POST" });
+      setHub((h) => ({ ...h, ...data }));
+      setSyncMsg({ type: "ok", text: `Synced: ${data.current_ip}` });
+    } catch (err) {
+      setSyncMsg({ type: "err", text: err.message });
+    } finally {
+      setSyncing(false);
+    }
+  }
 
   function logout() {
     clearToken();
@@ -56,6 +74,37 @@ export default function DeskLayout({ children, title }) {
             );
           })}
         </nav>
+
+        <div className="border-t border-zinc-900 px-5 py-4 space-y-2">
+          <div className="flex items-center gap-2 text-xs text-zinc-500">
+            <Wifi size={12} />
+            <span className="font-mono truncate">
+              {hub?.current_ip || "not set"}
+            </span>
+          </div>
+          {hub?.updated_at && (
+            <div className="text-[10px] text-zinc-600">
+              updated {new Date(hub.updated_at).toLocaleString()}
+            </div>
+          )}
+          <button
+            onClick={syncHubIp}
+            disabled={syncing}
+            className="w-full flex items-center justify-center gap-2 text-xs bg-zinc-900 hover:bg-zinc-800 disabled:opacity-50 text-zinc-300 py-2 rounded border border-zinc-800"
+          >
+            <RefreshCw size={12} className={syncing ? "animate-spin" : ""} />
+            {syncing ? "syncing..." : "Sync hub IP"}
+          </button>
+          {syncMsg && (
+            <div
+              className={`text-[10px] ${
+                syncMsg.type === "ok" ? "text-emerald-400" : "text-red-400"
+              }`}
+            >
+              {syncMsg.text}
+            </div>
+          )}
+        </div>
 
         <button
           onClick={logout}
