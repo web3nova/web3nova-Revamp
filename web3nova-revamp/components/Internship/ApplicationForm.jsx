@@ -256,6 +256,7 @@ const ApplicationForm = () => {
                   <p className="text-gray-400 max-w-md mb-8">
                     Now create a passkey on this device. You'll use it (fingerprint,
                     Face ID, or device unlock) to check in and out at the hub.
+                  </p>
                 </div>
 
                 <div className="rounded-2xl border border-white/10 bg-black/30 p-5 space-y-3 text-sm text-gray-300">
