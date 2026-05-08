@@ -12,14 +12,14 @@ const NAV = [
 
 function Sidebar({ router, hub, syncing, syncMsg, syncHubIp, logout, onClose }) {
   return (
-    <aside className="w-60 bg-zinc-950 flex flex-col h-full">
+    <aside className="w-full bg-zinc-950 flex flex-col h-full">
       <div className="px-5 py-6 border-b border-zinc-900 flex items-center justify-between">
         <div>
           <div className="text-lg font-semibold">Desk</div>
           <div className="text-xs text-zinc-500">Web3Nova</div>
         </div>
         {onClose && (
-          <button onClick={onClose} className="text-zinc-400 hover:text-white md:hidden">
+          <button type="button" onClick={onClose} aria-label="Close navigation" className="text-zinc-400 hover:text-white md:hidden">
             <X size={18} />
           </button>
         )}
@@ -142,16 +142,18 @@ export default function DeskLayout({ children, title }) {
       )}
 
       {/* Mobile drawer */}
-      <div className={`fixed inset-y-0 left-0 z-50 w-64 border-r border-zinc-900 flex flex-col transform transition-transform duration-200 md:hidden ${drawerOpen ? "translate-x-0" : "-translate-x-full"}`}>
-        <Sidebar {...sidebarProps} onClose={() => setDrawerOpen(false)} />
-      </div>
+      {drawerOpen && (
+        <div className="fixed inset-y-0 left-0 z-50 w-60 border-r border-zinc-900 flex flex-col md:hidden">
+          <Sidebar {...sidebarProps} onClose={() => setDrawerOpen(false)} />
+        </div>
+      )}
 
       {/* Main content */}
       <div className="flex-1 flex flex-col min-w-0">
 
         {/* Mobile top bar */}
         <header className="md:hidden flex items-center gap-3 px-4 py-3 border-b border-zinc-900 bg-zinc-950">
-          <button onClick={() => setDrawerOpen(true)} className="text-zinc-400 hover:text-white">
+          <button type="button" onClick={() => setDrawerOpen(true)} aria-label="Open navigation" className="text-zinc-400 hover:text-white">
             <Menu size={20} />
           </button>
           <span className="text-sm font-semibold">{title || "Desk"}</span>
